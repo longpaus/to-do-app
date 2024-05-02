@@ -31,7 +31,7 @@ export default function Home() {
         <ul className="max-w divide-y divide-gray-200 dark:divide-gray-700 mt-12">
           {tasks.map((t, index
           ) => (
-            <TaskCard task={t} onChange={() => changeTaskHandler(index)}/>
+            <TaskCard key={index} task={t} onChange={changeTaskHandler(index)}/>
           ))}
         </ul>
       </div>
