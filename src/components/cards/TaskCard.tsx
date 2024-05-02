@@ -11,7 +11,7 @@ export default function TaskCard({task, onChange}: TaskCardProps) {
     <li
       onFocus={() => setFocus(true)}
       onBlur={() => setFocus(false)}
-      className={`hover:bg-surface p-4 rounded group-hover:bg-surface ${focus ? 'bg-surface' : ''}`}
+      className={`hover:bg-surface p-2 rounded group-hover:bg-surface ${focus ? 'bg-surface' : ''}`}
     >
       <div className="flex justify-between items-center text-onSurface">
         <input type="checkbox"
