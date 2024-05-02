@@ -6,9 +6,13 @@ interface TaskCardProps {
 }
 
 export default function TaskCard({task, onChange}: TaskCardProps) {
-
+  const [focus, setFocus] = React.useState(false);
   return (
-    <li className="hover:bg-surface p-4 rounded group-hover:bg-surface ">
+    <li
+      onFocus={() => setFocus(true)}
+      onBlur={() => setFocus(false)}
+      className={`hover:bg-surface p-4 rounded group-hover:bg-surface ${focus ? 'bg-surface' : ''}`}
+    >
       <div className="flex justify-between items-center text-onSurface">
         <input type="checkbox"
                className="h-4 w-4 cursor-pointer appearance-none border checked:bg-gray-700 "
