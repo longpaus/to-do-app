@@ -6,7 +6,7 @@ interface TaskListProps {
   listType: TaskListType;
   tasks: Task[];
   onClickCheckBox: (taskId: string, listType: TaskListType) => void;
-  onChangeTaskName: (taskId: string, listType: TaskListType, newTaskName: string) => void;
+  onChangeTaskName: (taskId: string, listType: TaskListType) => (newTask: string) => void;
 }
 
 const TaskList: React.FC<TaskListProps> = (props) => {
@@ -22,7 +22,7 @@ const TaskList: React.FC<TaskListProps> = (props) => {
             taskName={t.name}
             checked={listType === 'complete'}
             onClickCheckBox={() => onClickCheckBox(t.id, listType)}
-            onChange={(newTaskName) => onChangeTaskName(t.id, listType, newTaskName)}
+            onChange={onChangeTaskName(t.id, listType)}
           />
         ))}
       </ul>
