@@ -1,40 +1,73 @@
 import React, {useState} from "react";
 import AddTaskForm from "../components/AddTaskForm";
 import TaskCard from "../components/cards/TaskCard";
-
-type TaskListType = 'ongoing' | 'complete';
-type Task = string
-type TasksList = {
-  [listName in TaskListType]: Task[];
-};
+import {Task, TaskId, TaskListType, TasksList} from "../types/TaskTypes";
+import uuid from "react-uuid";
 
 export default function Home() {
-  const [task, setTask] = useState<Task>('');
+  const [task, setTask] = useState<string>('');
   const [tasksList, setTasksList] = useState<TasksList>({complete: [], ongoing: []});
-  // const [tasks, setTasks] = useState<string[]>([]);
   const ListTypes: TaskListType[] = ['ongoing', 'complete'];
-  const addTask = (task: Task, listType: TaskListType) => {
+
+  const addTaskToList = (task: Task, listType: TaskListType) => {
     setTasksList(prevState => ({
       ...prevState,
       [listType]: [task, ...prevState[listType]]
     }));
   };
-  const changeTaskHandler = (index: number, listType: TaskListType) => {
-    return (newTask: string) => {
+  const changeTaskNameHandler = (taskId: TaskId, listType: TaskListType) => {
+    return (newTaskName: string) => {
       setTasksList(prevState => {
-        const newList = [...prevState[listType]];
-        newList[index] = newTask;
+        const newList = prevState[listType].map(task => {
+          if (task.id === taskId) {
+            return {...task, name: newTaskName};
+          }
+          return task;
+        })
         return {
           ...prevState,
           [listType]: newList
-        };
-      });
-    };
-  };
-  const handleSubmitTask = (e: React.FormEvent<HTMLFormElement>) => {
+        }
+      })
+    }
+  }
+  const removeTaskFromList = (id: TaskId, listType: TaskListType) => {
+    setTasksList(prevState => {
+      const newList = [...prevState[listType]].filter(task => task.id !== id);
+      return {
+        ...prevState,
+        [listType]: newList
+      }
+    })
+  }
+
+  const findTask = (id: TaskId, listType: TaskListType): Task | undefined => {
+    return tasksList[listType].find(task => task.id === id);
+  }
+
+  const clickCheckedHandler = (taskId: TaskId, listType: TaskListType) => {
+    // set complete task to incomplete
+    if (listType === 'complete') {
+      const task = findTask(taskId, 'complete');
+      if (task) {
+        removeTaskFromList(taskId, 'complete');
+        addTaskToList(task, 'ongoing');
+      }
+    }
+    // completed a task
+    else if (listType === 'ongoing') {
+      const task = findTask(taskId, 'ongoing');
+      if (task) {
+        removeTaskFromList(taskId, 'ongoing');
+        addTaskToList(task, 'complete');
+      }
+    }
+  }
+  const submitTaskHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (task.length !== 0) {
-      addTask(task, 'ongoing');
+      const newTask: Task = {name: task, id: uuid()}
+      addTaskToList(newTask, 'ongoing');
       setTask('');
     }
   }
@@ -42,19 +75,20 @@ export default function Home() {
     <div className="flex relative top-12 items-center h-screen  flex-col ">
       <div className="max-w-110 min-w-80 w-1/2 h-1/2 p-4">
         <AddTaskForm
-          onSubmit={handleSubmitTask} task={task}
+          onSubmit={submitTaskHandler} task={task}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => setTask(e.target.value)}
         />
         {ListTypes.map((listType) => (
-          <details className="collapse collapse-arrow mt-12 ">
+          tasksList[listType].length > 0 &&
+          <details className="collapse collapse-arrow mt-10 ">
             <summary className="collapse-title text-sm">{listType}</summary>
-            <ul className="collapse-content max-w divide-y divide-gray-200 dark:divide-gray-700">
+            <ul className="collapse-content max-w divide-y divide-gray-800 dark:divide-gray-700">
               {tasksList[listType].map((t: Task, index: number) => (
-                <TaskCard key={`${listType}-${index}`} task={t} onChange={changeTaskHandler(index, listType)}/>
+                <TaskCard onClickCheckBox={() => clickCheckedHandler(t.id, listType)} key={t.id}
+                          taskName={t.name} onChange={changeTaskNameHandler(t.id, listType)}/>
               ))}
             </ul>
           </details>
-
         ))}
 
       </div>
