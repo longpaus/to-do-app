@@ -39,18 +39,22 @@ export default function Home() {
     }
   }
   return (
-    <div className="flex justify-center items-center h-screen  flex-col ">
+    <div className="flex relative top-12 items-center h-screen  flex-col ">
       <div className="max-w-110 min-w-80 w-1/2 h-1/2 p-4">
         <AddTaskForm
           onSubmit={handleSubmitTask} task={task}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => setTask(e.target.value)}
         />
         {ListTypes.map((listType) => (
-          <ul className="max-w divide-y divide-gray-200 dark:divide-gray-700 mt-12">
-            {tasksList[listType].map((t: Task, index: number) => (
-              <TaskCard key={`${listType}-${index}`} task={t} onChange={changeTaskHandler(index, listType)}/>
-            ))}
-          </ul>
+          <details className="collapse collapse-arrow mt-12 ">
+            <summary className="collapse-title text-sm">{listType}</summary>
+            <ul className="collapse-content max-w divide-y divide-gray-200 dark:divide-gray-700">
+              {tasksList[listType].map((t: Task, index: number) => (
+                <TaskCard key={`${listType}-${index}`} task={t} onChange={changeTaskHandler(index, listType)}/>
+              ))}
+            </ul>
+          </details>
+
         ))}
 
       </div>
