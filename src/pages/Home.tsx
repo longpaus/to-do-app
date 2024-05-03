@@ -78,17 +78,22 @@ export default function Home() {
           onSubmit={submitTaskHandler} task={task}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => setTask(e.target.value)}
         />
+
         {ListTypes.map((listType) => (
           tasksList[listType].length > 0 &&
-          <details className="collapse collapse-arrow mt-10 ">
-            <summary className="collapse-title text-sm">{listType}</summary>
+          <div className="collapse collapse-arrow mt-10">
+            <input type="checkbox" defaultChecked={true}/>
+            <div className="collapse-title text-sm">
+              {listType}
+            </div>
             <ul className="collapse-content max-w divide-y divide-gray-800 dark:divide-gray-700">
               {tasksList[listType].map((t: Task, index: number) => (
                 <TaskCard onClickCheckBox={() => clickCheckedHandler(t.id, listType)} key={t.id}
                           taskName={t.name} onChange={changeTaskNameHandler(t.id, listType)}/>
               ))}
             </ul>
-          </details>
+          </div>
+
         ))}
 
       </div>
