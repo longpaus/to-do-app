@@ -1,8 +1,8 @@
 import React, {useState} from "react";
 import AddTaskForm from "../components/AddTaskForm";
-import TaskCard from "../components/cards/TaskCard";
 import {Task, TaskId, TaskListType, TasksList} from "../types/TaskTypes";
 import uuid from "react-uuid";
+import TaskList from "../components/TaskList";
 
 export default function Home() {
   const [task, setTask] = useState<string>('');
@@ -66,7 +66,7 @@ export default function Home() {
   const submitTaskHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (task.length !== 0) {
-      const newTask: Task = {name: task, id: uuid()}
+      const newTask: Task = {name: task, id: uuid(), creationTime: new Date()}
       addTaskToList(newTask, 'ongoing');
       setTask('');
     }
@@ -81,23 +81,13 @@ export default function Home() {
 
         {ListTypes.map((listType) => (
           tasksList[listType].length > 0 &&
-          <div className="collapse collapse-arrow mt-10">
-            <input type="checkbox" defaultChecked={true}/>
-            <div className="collapse-title text-sm">
-              {listType}
-            </div>
-            <ul className="collapse-content max-w divide-y divide-gray-800 dark:divide-gray-700">
-              {tasksList[listType].map((t: Task, index: number) => (
-                <TaskCard
-                  onClickCheckBox={() => clickCheckedHandler(t.id, listType)}
-                  key={t.id}
-                  taskName={t.name} onChange={changeTaskNameHandler(t.id, listType)}
-                  checked={listType === 'complete'}
-                />
-              ))}
-            </ul>
-          </div>
-
+          <TaskList
+            key={listType}
+            listType={listType}
+            tasks={tasksList[listType]}
+            onClickCheckBox={clickCheckedHandler}
+            onChangeTaskName={changeTaskNameHandler}
+          />
         ))}
 
       </div>
