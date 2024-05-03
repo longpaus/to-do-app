@@ -21,7 +21,7 @@ export default function TaskCard({taskName, onChange, onClickCheckBox, checked}:
 
       <div className="flex justify-between items-center text-onSurface">
         <input type="checkbox"
-               className="h-4 w-4 cursor-pointer appearance-none border checked:bg-gray-600 "
+               className=" h-5 w-5 cursor-pointer appearance-none  border checked:bg-gray-600 checked:hover:bg-gray-400"
                checked={checked}
                onClick={onClickCheckBox}
         />
