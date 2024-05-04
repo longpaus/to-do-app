@@ -1,10 +1,10 @@
 import React from 'react';
-import Home from "./pages/Home";
+import TaskController from "./components/TaskController";
 
 function App() {
   return (
     <div className="bg-background">
-      <Home/>
+      <TaskController/>
 
     </div>
   );
