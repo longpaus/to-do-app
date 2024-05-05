@@ -1,6 +1,7 @@
 import React from 'react';
 import {Task, TaskListType} from '../types/TaskTypes';
 import TaskCard from "./cards/TaskCard";
+import Collapse from "./Collapse";
 
 interface TaskListProps {
   listType: TaskListType;
@@ -12,20 +13,24 @@ interface TaskListProps {
 const TaskList: React.FC<TaskListProps> = (props) => {
   const {listType, tasks, onClickCheckBox, onChangeTaskName} = props;
   return (
-    <div className="collapse collapse-arrow mt-10">
-      <input type="checkbox" defaultChecked={true}/>
-      <div className="collapse-title text-sm text-white">{listType}</div>
-      <ul className="collapse-content max-w divide-y divide-gray-800 dark:divide-gray-700">
-        {tasks.map((t: Task, index: number) => (
-          <TaskCard
-            key={t.id}
-            taskName={t.name}
-            checked={listType === 'complete'}
-            onClickCheckBox={() => onClickCheckBox(t.id, listType)}
-            onChange={onChangeTaskName(t.id, listType)}
-          />
-        ))}
-      </ul>
+    <div className=" mt-10">
+      <Collapse
+        title={<div className="text-sm text-white">{listType}</div>}
+        defaultOpen={true}
+        content={
+          <ul className="max-w divide-y divide-gray-800 dark:divide-gray-700">
+            {tasks.map((t: Task, index: number) => (
+              <TaskCard
+                key={t.id}
+                taskName={t.name}
+                checked={listType === 'complete'}
+                onClickCheckBox={() => onClickCheckBox(t.id, listType)}
+                onChange={onChangeTaskName(t.id, listType)}
+              />
+            ))}
+          </ul>
+        }
+      />
     </div>
   );
 };
