@@ -1,10 +1,11 @@
 import React, {useState} from "react";
-import AddTaskForm from "../components/AddTaskForm";
+import AddTaskForm from "./AddTaskForm";
 import {Task, TaskId, TaskListType, TasksList} from "../types/TaskTypes";
 import uuid from "react-uuid";
-import TaskList from "../components/TaskList";
+import TaskList from "./TaskList";
+import SwapVertIcon from '@mui/icons-material/SwapVert';
 
-export default function Home() {
+export default function TaskController() {
   const [task, setTask] = useState<string>('');
   const [tasksList, setTasksList] = useState<TasksList>({complete: [], ongoing: []});
   const ListTypes: TaskListType[] = ['ongoing', 'complete'];
@@ -12,7 +13,7 @@ export default function Home() {
   const addTaskToList = (task: Task, listType: TaskListType) => {
     setTasksList(prevState => ({
       ...prevState,
-      [listType]: [task, ...prevState[listType]]
+      [listType]: [task, ...prevState[listType]].sort((a, b) => b.creationTime.getTime() - a.creationTime.getTime()),
     }));
   };
   const changeTaskNameHandler = (taskId: TaskId, listType: TaskListType) => {
@@ -71,9 +72,14 @@ export default function Home() {
       setTask('');
     }
   }
+
   return (
     <div className="flex relative top-12 items-center h-screen  flex-col ">
       <div className="max-w-110 min-w-80 w-1/2 h-1/2 p-4">
+        <div className="mb-3 flex justify-between items-center">
+          <div className="text-2xl text-white">Tasks</div>
+          <SwapVertIcon fontSize="medium" className=" cursor-pointer"/>
+        </div>
         <AddTaskForm
           onSubmit={submitTaskHandler} task={task}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => setTask(e.target.value)}
