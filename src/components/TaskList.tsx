@@ -1,7 +1,7 @@
 import React from 'react';
 import {Task, TaskListType} from '../types/TaskTypes';
 import TaskCard from "./cards/TaskCard";
-import Collapse from "./Collapse";
+import Accordion from "./Accordion";
 
 interface TaskListProps {
   listType: TaskListType;
@@ -13,8 +13,8 @@ interface TaskListProps {
 const TaskList: React.FC<TaskListProps> = (props) => {
   const {listType, tasks, onClickCheckBox, onChangeTaskName} = props;
   return (
-    <div className=" mt-10">
-      <Collapse
+    <div className="mt-10">
+      <Accordion
         title={<div className="text-sm text-white">{listType}</div>}
         defaultOpen={true}
         content={

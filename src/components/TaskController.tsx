@@ -3,13 +3,15 @@ import AddTaskForm from "./AddTaskForm";
 import {Task, TaskId, TaskListType, TasksList} from "../types/TaskTypes";
 import uuid from "react-uuid";
 import TaskList from "./TaskList";
-import SwapVertIcon from '@mui/icons-material/SwapVert';
+import {SortStrategy} from "../types/SortStrategy";
+import Dropdown from "./Dropdown";
+import Accordion from "./Accordion";
 
 export default function TaskController() {
   const [task, setTask] = useState<string>('');
   const [tasksList, setTasksList] = useState<TasksList>({complete: [], ongoing: []});
   const ListTypes: TaskListType[] = ['ongoing', 'complete'];
-
+  const [sortStrategy, setSortStrategy] = useState<SortStrategy>('');
   const addTaskToList = (task: Task, listType: TaskListType) => {
     setTasksList(prevState => ({
       ...prevState,
@@ -75,10 +77,14 @@ export default function TaskController() {
 
   return (
     <div className="flex relative top-12 items-center h-screen  flex-col ">
-      <div className="max-w-110 min-w-80 w-1/2 h-1/2 p-4">
+      <div className="max-w-115 min-w-80 w-1/2 h-1/2 p-4">
         <div className="mb-3 flex justify-between items-center">
           <div className="text-2xl text-white">Tasks</div>
-          <SwapVertIcon fontSize="medium" className=" cursor-pointer"/>
+          <Dropdown>
+            <li><Accordion title={<div>sort by</div>} defaultOpen={false} content={<div>heelo</div>}/></li>
+            <li><a>sort by</a></li>
+            <li><a>Item 2</a></li>
+          </Dropdown>
         </div>
         <AddTaskForm
           onSubmit={submitTaskHandler} task={task}
