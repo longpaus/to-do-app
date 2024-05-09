@@ -10,7 +10,7 @@ const Accordion: React.FC<CollapseProps> = (props) => {
   const { title, defaultOpen, content } = props;
   const [open, setOpen] = React.useState(defaultOpen);
   return (
-    <div className="w-full">
+    <div className="w-full  ">
       <input type="checkbox" checked={open} className="peer sr-only" />
       <label
         className="w-full flex items-center justify-between transition-colors duration-1000 ease-in-out cursor-pointer"
@@ -28,7 +28,7 @@ const Accordion: React.FC<CollapseProps> = (props) => {
         </svg>
       </label>
       <div
-        className={`h-0 peer-checked:h-auto overflow-hidden transition-[height] duration-1000 ease-in-out p-2`}
+        className={`h-0 peer-checked:h-auto overflow-hidden transition-[height] duration-1000 ease-in-out p-2 z-99`}
       >
         {content}
       </div>
