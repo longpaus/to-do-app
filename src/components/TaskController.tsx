@@ -4,9 +4,7 @@ import { Task, TaskId, TaskListType, TasksList } from "../types/TaskTypes";
 import uuid from "react-uuid";
 import TaskList from "./TaskList";
 import { SortStrategy } from "../types/SortStrategy";
-import Dropdown from "./Dropdown";
-import SwapVertIcon from "@mui/icons-material/SwapVert";
-import MenuItem from "./ui/MenuItem";
+import TaskControllerDropdown from "./TaskControllerDropdown";
 
 export default function TaskController() {
   const [task, setTask] = useState<string>("");
@@ -90,33 +88,7 @@ export default function TaskController() {
       <div className="max-w-115 min-w-80 w-1/2 h-1/2 p-4">
         <div className="mb-3 flex justify-between items-center">
           <div className="text-2xl text-white">Tasks</div>
-          <Dropdown
-            title={
-              <SwapVertIcon
-                fontSize="medium"
-                className="cursor-pointer hover:bg-surface"
-              />
-            }
-          >
-            <ul className="bg-surface w-40 border-gray-800 text-white">
-              <Dropdown
-                title={<MenuItem hoverColor="bg-gray-500">Sort By</MenuItem>}
-              >
-                <ul className="rounded bg-surface text-white w-24 border-solid border border-gray-500">
-                  <MenuItem hoverColor="">Date</MenuItem>
-                  <MenuItem hoverColor="">Title</MenuItem>
-                </ul>
-              </Dropdown>
-              <Dropdown
-                title={<MenuItem hoverColor="bg-gray-500">Group By</MenuItem>}
-              >
-                <ul className="rounded bg-surface text-white w-24 border-solid border border-gray-500">
-                  <MenuItem hoverColor="">Date</MenuItem>
-                  <MenuItem hoverColor="">Title</MenuItem>
-                </ul>
-              </Dropdown>
-            </ul>
-          </Dropdown>
+          <TaskControllerDropdown />
         </div>
         <AddTaskForm
           onSubmit={submitTaskHandler}
