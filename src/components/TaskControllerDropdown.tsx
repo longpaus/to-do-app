@@ -21,12 +21,20 @@ export default function TaskControllerDropdown() {
       document.removeEventListener("click", handleOutsideClick);
     };
   }, []);
-  useEffect(() => {
-    setGroupByOpen(false);
-  }, [sortByOpen]);
-  useEffect(() => {
-    setSortByOpen(false);
-  }, [groupByOpen]);
+  const handleInnerDropdownClick = (dropdownType: string) => {
+    return (open: boolean) => {
+      switch (dropdownType) {
+        case "sortBy":
+          setGroupByOpen(false);
+          setSortByOpen(open);
+          break;
+        case "groupBy":
+          setSortByOpen(false);
+          setGroupByOpen(open);
+          break;
+      }
+    };
+  };
   return (
     <Dropdown
       ref={dropDownRef}
@@ -42,7 +50,7 @@ export default function TaskControllerDropdown() {
       <ul className="bg-surface w-40 border-gray-800 text-white">
         <Dropdown
           open={sortByOpen}
-          setOpenFunc={(open) => setSortByOpen(open)}
+          setOpenFunc={handleInnerDropdownClick("sortBy")}
           title={<MenuItem hoverColor="bg-gray-500">Sort By</MenuItem>}
         >
           <ul className="rounded bg-surface text-white w-24 border-solid border border-gray-500">
@@ -52,7 +60,7 @@ export default function TaskControllerDropdown() {
         </Dropdown>
         <Dropdown
           open={groupByOpen}
-          setOpenFunc={(open) => setGroupByOpen(open)}
+          setOpenFunc={handleInnerDropdownClick("groupBy")}
           title={<MenuItem hoverColor="bg-gray-500">Group By</MenuItem>}
         >
           <ul className="rounded bg-surface text-white w-24 border-solid border border-gray-500">

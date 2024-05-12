@@ -87,7 +87,7 @@ export default function TaskController() {
     <div className="flex relative top-12 items-center h-screen  flex-col ">
       <div className="max-w-115 min-w-80 w-1/2 h-1/2 p-4">
         <div className="mb-3 flex justify-between items-center">
-          <div className="text-2xl text-white">Tasks</div>
+          <div className="text-2xl text-black dark:text-white ">Tasks</div>
           <TaskControllerDropdown />
         </div>
         <AddTaskForm
