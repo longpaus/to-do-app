@@ -1,11 +1,10 @@
-import React, { ReactNode, Ref } from "react";
+import React, { ReactNode } from "react";
 
 interface DropDownProps {
   children: ReactNode;
   title: ReactNode;
   open: boolean;
   setOpenFunc: (open: boolean) => void;
-  ref?: Ref<HTMLDivElement>;
 }
 
 export default function Dropdown(props: DropDownProps) {
@@ -19,7 +18,6 @@ export default function Dropdown(props: DropDownProps) {
       {props.open && (
         <div
           className={`absolute z-10 rounded-md transition-opacity duration-1000`}
-          ref={props.ref}
         >
           {props.children}
         </div>

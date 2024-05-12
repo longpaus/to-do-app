@@ -36,39 +36,40 @@ export default function TaskControllerDropdown() {
     };
   };
   return (
-    <Dropdown
-      ref={dropDownRef}
-      title={
-        <SwapVertIcon
-          fontSize="medium"
-          className="cursor-pointer hover:bg-surface"
-        />
-      }
-      open={mainOpen}
-      setOpenFunc={() => setMainOpen(!mainOpen)}
-    >
-      <ul className="bg-surface w-40 border-gray-800 text-white">
-        <Dropdown
-          open={sortByOpen}
-          setOpenFunc={handleInnerDropdownClick("sortBy")}
-          title={<MenuItem hoverColor="bg-gray-500">Sort By</MenuItem>}
-        >
-          <ul className="rounded bg-surface text-white w-24 border-solid border border-gray-500">
-            <MenuItem hoverColor="">Date</MenuItem>
-            <MenuItem hoverColor="">Title</MenuItem>
-          </ul>
-        </Dropdown>
-        <Dropdown
-          open={groupByOpen}
-          setOpenFunc={handleInnerDropdownClick("groupBy")}
-          title={<MenuItem hoverColor="bg-gray-500">Group By</MenuItem>}
-        >
-          <ul className="rounded bg-surface text-white w-24 border-solid border border-gray-500">
-            <MenuItem hoverColor="">Date</MenuItem>
-            <MenuItem hoverColor="">Title</MenuItem>
-          </ul>
-        </Dropdown>
-      </ul>
-    </Dropdown>
+    <div ref={dropDownRef}>
+      <Dropdown
+        title={
+          <SwapVertIcon
+            fontSize="medium"
+            className="cursor-pointer hover:bg-surface"
+          />
+        }
+        open={mainOpen}
+        setOpenFunc={() => setMainOpen(!mainOpen)}
+      >
+        <ul className="bg-surface w-40 border-gray-800 text-white">
+          <Dropdown
+            open={sortByOpen}
+            setOpenFunc={handleInnerDropdownClick("sortBy")}
+            title={<MenuItem hoverColor="bg-gray-500">Sort By</MenuItem>}
+          >
+            <ul className="rounded bg-surface text-white w-24 border-solid border border-gray-500">
+              <MenuItem hoverColor="">Date</MenuItem>
+              <MenuItem hoverColor="">Title</MenuItem>
+            </ul>
+          </Dropdown>
+          <Dropdown
+            open={groupByOpen}
+            setOpenFunc={handleInnerDropdownClick("groupBy")}
+            title={<MenuItem hoverColor="bg-gray-500">Group By</MenuItem>}
+          >
+            <ul className="rounded bg-surface text-white w-24 border-solid border border-gray-500">
+              <MenuItem hoverColor="">Date</MenuItem>
+              <MenuItem hoverColor="">Title</MenuItem>
+            </ul>
+          </Dropdown>
+        </ul>
+      </Dropdown>
+    </div>
   );
 }
