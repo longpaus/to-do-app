@@ -1,14 +1,25 @@
-import React, { ReactNode } from "react";
+import React, {ReactNode} from "react";
+import CheckIcon from '@mui/icons-material/Check';
 
 interface MenuItemProps {
   children?: ReactNode;
-  hoverColor: string;
+  hoverColor?: string;
+  selected?: boolean;
+  onClick?: () => void;
 }
 
 export default function MenuItem(props: MenuItemProps) {
   return (
-    <li className={`p-2 cursor-pointer bg-inherit hover:opacity-25`}>
-      {props.children}
+    <li onClick={(e) => {
+      if (props.onClick) {
+        e.stopPropagation();
+        props.onClick();
+      }
+    }} className={`p-2 cursor-pointer bg-inherit hover:opacity-25`}>
+      <div className={` ${props.selected ? 'flex justify-between text-blue-400' : ''}`}>
+        {props.children}
+        {props.selected && <CheckIcon/>}
+      </div>
     </li>
   );
 }

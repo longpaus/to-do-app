@@ -1,1 +1,1 @@
-export type SortStrategy = '';
+export type SortStrategy = 'Date' | 'Title';

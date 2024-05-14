@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import AddTaskForm from "./AddTaskForm";
-import { Task, TaskId, TaskListType, TasksList } from "../types/TaskTypes";
+import {Task, TaskId, TaskListType, TasksList} from "../types/TaskTypes";
 import uuid from "react-uuid";
 import TaskList from "./TaskList";
-import { SortStrategy } from "../types/SortStrategy";
 import TaskControllerDropdown from "./TaskControllerDropdown";
+import {useStore} from "../store";
 
 export default function TaskController() {
   const [task, setTask] = useState<string>("");
@@ -12,22 +12,66 @@ export default function TaskController() {
     complete: [],
     ongoing: [],
   });
+  const store = useStore();
   const ListTypes: TaskListType[] = ["ongoing", "complete"];
-  const [sortStrategy, setSortStrategy] = useState<SortStrategy>("");
+
+  useEffect(() => {
+    switch (store.sortTask) {
+      case "Date":
+        ListTypes.forEach(listType => {
+          setTasksList((prevState) => ({
+            ...prevState,
+            [listType]: prevState[listType].sort(
+              (a: Task, b: Task) => b.creationTime.getTime() - a.creationTime.getTime(),
+            ),
+          }));
+        })
+        break;
+      case "Title":
+        ListTypes.forEach(listType => {
+          setTasksList((prevState) => ({
+            ...prevState,
+            [listType]: [...prevState[listType]]
+              .sort(
+                (a, b) => a.name.localeCompare(b.name),
+              ),
+          }));
+        });
+        break;
+      default:
+        break;
+    }
+  }, [store.sortTask]);
   const addTaskToList = (task: Task, listType: TaskListType) => {
-    setTasksList((prevState) => ({
-      ...prevState,
-      [listType]: [task, ...prevState[listType]].sort(
-        (a, b) => b.creationTime.getTime() - a.creationTime.getTime(),
-      ),
-    }));
+    switch (store.sortTask) {
+      case "Date":
+        setTasksList((prevState) => ({
+          ...prevState,
+          [listType]: [task, ...prevState[listType]]
+        }));
+        break;
+      case "Title":
+        setTasksList((prevState) => {
+          const newList = [...prevState[listType]];
+          let index = 0;
+          while (index < newList.length && task.name.localeCompare(newList[index].name) > 0) {
+            index++;
+          }
+          newList.splice(index, 0, task);
+          return {
+            ...prevState,
+            [listType]: newList
+          };
+        });
+    }
+
   };
   const changeTaskNameHandler = (taskId: TaskId, listType: TaskListType) => {
     return (newTaskName: string) => {
       setTasksList((prevState) => {
         const newList = prevState[listType].map((task) => {
           if (task.id === taskId) {
-            return { ...task, name: newTaskName };
+            return {...task, name: newTaskName};
           }
           return task;
         });
@@ -88,7 +132,7 @@ export default function TaskController() {
       <div className="max-w-115 min-w-80 w-1/2 h-1/2 p-4">
         <div className="mb-3 flex justify-between items-center">
           <div className="text-2xl text-black dark:text-white ">Tasks</div>
-          <TaskControllerDropdown />
+          <TaskControllerDropdown/>
         </div>
         <AddTaskForm
           onSubmit={submitTaskHandler}
