@@ -19,11 +19,11 @@ export default function AddTaskForm({onSubmit, task, onChange, dueDate}: AddTask
                value={task}
                onChange={onChange}
         />
-        <div className="absolute bottom-3 right-16 p-1 text-blue-500 cursor-pointer hover:bg-gray-800">
+        <div className="absolute bottom-3 end-20 p-1 text-blue-500 cursor-pointer hover:bg-gray-800">
           {dueDate.getDay().toString()}/{dueDate.getMonth() + 1}
         </div>
         <button type="submit"
-                className="absolute end-1.5 bottom-2.5 text-onPrimary bg-primary h-9 hover:bg-purple-500 focus:ring-4 focus:outline-none focus:ring-purple-500 focus:border-purple-500 font-medium rounded-lg px-4 py-2 text-sm"
+                className="absolute end-3 bottom-2.5 text-onPrimary bg-primary h-9 hover:bg-purple-500 focus:ring-4 focus:outline-none focus:ring-purple-500 focus:border-purple-500 font-medium rounded-lg px-4 py-2 text-sm"
         >
           Add
         </button>
