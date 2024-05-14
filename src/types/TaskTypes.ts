@@ -5,6 +5,7 @@ export type Task = {
   name: string,
   id: TaskId
   creationTime: Date
+  dueDate: Date
 }
 
 export type TasksList = {
