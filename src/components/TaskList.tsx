@@ -1,7 +1,7 @@
 import React from 'react';
 import {Task, TaskListType} from '../types/TaskTypes';
 import TaskCard from "./cards/TaskCard";
-import Accordion from "./Accordion";
+import Accordion from "./menus/Accordion";
 
 interface TaskListProps {
   listType: TaskListType;

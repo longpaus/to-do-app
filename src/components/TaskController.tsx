@@ -5,11 +5,9 @@ import uuid from "react-uuid";
 import TaskList from "./TaskList";
 import TaskControllerDropdown from "./TaskControllerDropdown";
 import {useStore} from "../store";
-import {defaultDueDate} from "../utils/date.js";
 
 export default function TaskController() {
   const [task, setTask] = useState<string>("");
-  const [dueDate, setDueDate] = useState<Date>(defaultDueDate());
   const [tasksList, setTasksList] = useState<TasksList>({
     complete: [],
     ongoing: [],
@@ -123,7 +121,7 @@ export default function TaskController() {
         name: task,
         id: uuid(),
         creationTime: new Date(),
-        dueDate: dueDate
+        dueDate: store.defaultDueDate
       };
       addTaskToList(newTask, "ongoing");
       setTask("");
@@ -140,10 +138,9 @@ export default function TaskController() {
         <AddTaskForm
           onSubmit={submitTaskHandler}
           task={task}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+          onChangeTaskName={(e: React.ChangeEvent<HTMLInputElement>) =>
             setTask(e.target.value)
           }
-          dueDate={dueDate}
         />
 
         {ListTypes.map(

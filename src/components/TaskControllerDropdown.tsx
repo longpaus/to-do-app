@@ -1,6 +1,6 @@
 import SwapVertIcon from "@mui/icons-material/SwapVert";
-import Dropdown from "./Dropdown";
-import MenuItem from "./ui/MenuItem";
+import Dropdown from "./menus/Dropdown";
+import MenuItem from "./menus/MenuItem";
 import React, {useState} from "react";
 import {useStore} from "../store";
 import {SortStrategy} from "../types/SortStrategy";
