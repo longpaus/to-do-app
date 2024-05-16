@@ -8,7 +8,7 @@ interface DropDownProps {
   detectOutsideClick?: boolean;
 }
 
-export default function Dropdown(props: DropDownProps) {
+export default function Dropdown(props: Readonly<DropDownProps>) {
   const dropDownRef = useRef<HTMLDivElement>(null);
   const handleButtonClick = (e: React.MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();

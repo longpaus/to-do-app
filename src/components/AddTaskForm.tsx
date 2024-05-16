@@ -26,7 +26,7 @@ export default function AddTaskForm({onSubmit, task, onChangeTaskName}: AddTaskF
           <Dropdown
             title={
               <div className="text-blue-500 p-1 cursor-pointer hover:bg-gray-800">
-                {store.defaultDueDate.getDay().toString()}/{store.defaultDueDate.getMonth() + 1}
+                {store.defaultDueDate.getDate().toString()}/{store.defaultDueDate.getMonth() + 1}
               </div>
             }
             open={calenderOpen}
