@@ -96,3 +96,7 @@ export function getGroupKey(task: Task, groupStrategy: GroupStrategyTypes) {
       return getGroupByDateKey(task);
   }
 }
+
+export function mergeGroupsIntoArray(tasksGroups: TasksGroups): Task[] {
+  return Object.values(tasksGroups).flat();
+}

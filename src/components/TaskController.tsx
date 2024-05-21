@@ -5,18 +5,17 @@ import uuid from "react-uuid";
 import TaskList from "./TaskList";
 import TaskControllerDropdown from "./TaskControllerDropdown";
 import {useStore} from "../store";
-import {getGroupKey, groupTasks} from "../utils/GroupingTasks";
+import {getGroupKey, groupTasks, mergeGroupsIntoArray} from "../utils/GroupingTasks";
 import {sortByDate, sortByTitle} from "../utils/SortingTasks";
 import {TasksGroups} from "../types/GroupStrategyTypes";
 
 export default function TaskController() {
   const store = useStore();
   const [task, setTask] = useState<string>("");
-  const [tasks, setTasks] = useState<Task[]>([])
-  const [tasksGroups, setTasksGroups] = useState<TasksGroups>(() => groupTasks(store.groupTask, tasks));
+  const [tasksGroups, setTasksGroups] = useState<TasksGroups>(() => groupTasks(store.groupTask, []));
 
   useEffect(() => {
-    setTasksGroups(() => groupTasks(store.groupTask, tasks));
+    setTasksGroups(() => groupTasks(store.groupTask, mergeGroupsIntoArray(tasksGroups)));
   }, [store.groupTask]);
 
 
