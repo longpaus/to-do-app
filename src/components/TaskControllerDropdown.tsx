@@ -37,6 +37,11 @@ export default function TaskControllerDropdown() {
     setSortByOpen(false);
     setGroupByOpen(false);
   }
+  const handleGroupSortStrategy = (strategy: GroupStrategyTypes) => {
+    store.upDateGroupTask(strategy);
+    setSortByOpen(false);
+    setGroupByOpen(false);
+  }
   return (
     <Dropdown
       title={
@@ -103,8 +108,16 @@ export default function TaskControllerDropdown() {
           }
         >
           <ul className="rounded bg-surface text-white w-24 border-solid border border-gray-500">
-            <MenuItem hoverColor="">Date</MenuItem>
-            <MenuItem hoverColor="">Title</MenuItem>
+
+            {groupStrategy.map((strategy) => (
+              <MenuItem
+                selected={strategy === store.groupTask}
+                key={strategy}
+                onClick={() => handleGroupSortStrategy(strategy)}
+              >
+                {strategy}
+              </MenuItem>
+            ))}
           </ul>
         </Dropdown>
       </ul>
