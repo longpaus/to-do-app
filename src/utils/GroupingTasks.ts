@@ -2,15 +2,6 @@ import {GroupStrategyTypes, TasksGroups} from "../types/GroupStrategyTypes";
 import {Task} from "../types/TaskTypes";
 import {isSameDay} from "./date.js";
 
-// type narrowing function for Date groups
-// export function isDateGroups(groups: TasksGroups): groups is DateGroups {
-//   return groups.type === 'Date';
-// }
-//
-// // type narrowing function for List groups
-// export function isListGroups(groups: TasksGroups): groups is ListGroups {
-//   return groups.type === 'List';
-// }
 
 export function groupTasks(groupStrategyType: GroupStrategyTypes, tasks: Task[]): TasksGroups {
   switch (groupStrategyType) {
@@ -29,12 +20,15 @@ export function getListTypeObject(groupStrategy: GroupStrategyTypes): TasksGroup
   switch (groupStrategy) {
     case "List":
       return {
-        Completed: [],
         Inbox: [],
+        Completed: [],
       }
     case "Date":
       return {
-        Completed: [], Overdue: [], Later: [], Today: [],
+        Today: [],
+        Later: [],
+        Overdue: [],
+        Completed: []
       }
   }
 }
@@ -46,9 +40,9 @@ export function getListTypeObject(groupStrategy: GroupStrategyTypes): TasksGroup
 export function getGroupKeys(groupStrategy: GroupStrategyTypes): string[] {
   switch (groupStrategy) {
     case "List":
-      return ['Completed', 'Inbox'];
+      return ['Inbox', 'Completed'];
     case "Date":
-      return ['Overdue', 'Later', 'Completed', 'Today'];
+      return ['Today', 'Later', 'Overdue', 'Completed'];
   }
 }
 
