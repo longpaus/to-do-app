@@ -22,9 +22,7 @@ const TaskList: React.FC<TaskListProps> = (props) => {
             {tasks.map((t: Task, index: number) => (
               <TaskCard
                 key={t.id}
-                id={t.id}
-                taskName={t.name}
-                checked={t.completed}
+                task={t}
                 onClickCheckBox={onClickCheckBox(t.id)}
                 onChange={onChangeTaskName(t.id)}
               />

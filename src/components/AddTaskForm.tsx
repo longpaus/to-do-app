@@ -2,6 +2,7 @@ import React, {ChangeEvent, FormEvent} from "react";
 import Dropdown from "./menus/Dropdown";
 import {useStore} from "../store";
 import Calendar from './calendar/Calendar';
+import {formatDate} from "../utils/date.js";
 
 interface AddTaskFormProps {
   onSubmit: (e: FormEvent<HTMLFormElement>) => void;
@@ -26,7 +27,7 @@ export default function AddTaskForm({onSubmit, task, onChangeTaskName}: Readonly
           <Dropdown
             title={
               <div className="text-blue-500 p-1 cursor-pointer hover:bg-gray-800">
-                {store.defaultDueDate.getDate().toString()}/{store.defaultDueDate.getMonth() + 1}
+                {formatDate(store.globalDueDate)}
               </div>
             }
             open={calenderOpen}

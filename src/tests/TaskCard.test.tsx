@@ -1,6 +1,7 @@
 import React from "react";
 import {cleanup, fireEvent, render, screen} from '@testing-library/react';
 import TaskCard from "../components/cards/TaskCard";
+import {Task} from "../types/TaskTypes";
 
 afterEach(cleanup);
 describe("TaskCard tests", () => {
@@ -9,13 +10,12 @@ describe("TaskCard tests", () => {
     const onClickCheckBoxMock = jest.fn();
 
     const taskName = "example"
+    const mockTask: Task = {name: taskName, creationTime: new Date(), id: 'id', completed: false, dueDate: new Date()}
     render(
       <TaskCard
-        taskName={taskName}
-        id={'example'}
+        task={mockTask}
         onChange={onChangeMock}
         onClickCheckBox={onClickCheckBoxMock}
-        checked={false}
       />
     );
     const textfieldElem = screen.getByRole("textbox");
@@ -28,13 +28,12 @@ describe("TaskCard tests", () => {
     const onClickCheckBoxMock = jest.fn();
 
     const taskName = "example"
+    const mockTask: Task = {name: taskName, creationTime: new Date(), id: 'id', completed: false, dueDate: new Date()}
     render(
       <TaskCard
-        taskName={taskName}
-        id={'example'}
+        task={mockTask}
         onChange={onChangeMock}
         onClickCheckBox={onClickCheckBoxMock}
-        checked={false}
       />
     );
     const textFieldElem = screen.getByRole('textbox');
@@ -46,15 +45,13 @@ describe("TaskCard tests", () => {
   test("render un-checked checkbox input", () => {
     const onChangeMock = jest.fn();
     const onClickCheckBoxMock = jest.fn();
-
     const taskName = "example"
+    const mockTask: Task = {name: taskName, creationTime: new Date(), id: 'id', completed: false, dueDate: new Date()}
     render(
       <TaskCard
-        taskName={taskName}
-        id={'example'}
+        task={mockTask}
         onChange={onChangeMock}
         onClickCheckBox={onClickCheckBoxMock}
-        checked={false}
       />
     );
 
@@ -67,13 +64,12 @@ describe("TaskCard tests", () => {
     const onClickCheckBoxMock = jest.fn();
 
     const taskName = "example"
+    const mockTask: Task = {name: taskName, creationTime: new Date(), id: 'id', completed: true, dueDate: new Date()}
     render(
       <TaskCard
-        taskName={taskName}
-        id={'example'}
+        task={mockTask}
         onChange={onChangeMock}
         onClickCheckBox={onClickCheckBoxMock}
-        checked={true}
       />
     );
 
@@ -86,13 +82,12 @@ describe("TaskCard tests", () => {
     const onClickCheckBoxMock = jest.fn();
 
     const taskName = "example"
+    const mockTask: Task = {name: taskName, creationTime: new Date(), id: 'id', completed: false, dueDate: new Date()}
     render(
       <TaskCard
-        taskName={taskName}
-        id={'example'}
+        task={mockTask}
         onChange={onChangeMock}
         onClickCheckBox={onClickCheckBoxMock}
-        checked={false}
       />
     );
     const checkbox = screen.getByRole("checkbox");
@@ -104,13 +99,12 @@ describe("TaskCard tests", () => {
     const onClickCheckBoxMock = jest.fn();
 
     const taskName = "example"
+    const mockTask: Task = {name: taskName, creationTime: new Date(), id: 'id', completed: false, dueDate: new Date()}
     render(
       <TaskCard
-        taskName={taskName}
+        task={mockTask}
         onChange={onChangeMock}
-        id={'example'}
         onClickCheckBox={onClickCheckBoxMock}
-        checked={false}
       />
     );
     const taskCardElem = screen.getByRole('listitem');
@@ -127,26 +121,23 @@ describe("TaskCard tests", () => {
     const onClickCheckBoxMock = jest.fn();
     const taskName = 'example task';
 
+    const mockTask: Task = {name: taskName, creationTime: new Date(), id: 'id', completed: false, dueDate: new Date()}
     const {rerender} = render(
       <TaskCard
-        taskName={taskName}
-        id={'example'}
+        task={mockTask}
         onChange={onChangeMock}
         onClickCheckBox={onClickCheckBoxMock}
-        checked={false}
       />
     );
-
     const taskCardElem = screen.getByRole('listitem');
     expect(taskCardElem).not.toHaveClass('opacity-50');
 
+    mockTask.completed = true;
     rerender(
       <TaskCard
-        taskName={taskName}
-        id={'example'}
+        task={mockTask}
         onChange={onChangeMock}
         onClickCheckBox={onClickCheckBoxMock}
-        checked={true}
       />
     );
 

@@ -12,7 +12,7 @@ export default function TaskControllerDropdown() {
   const [groupByOpen, setGroupByOpen] = useState(false);
   const store = useStore();
   const sortStrategy: SortStrategyTypes[] = ['Date', 'Title'];
-  const groupStrategy: GroupStrategyTypes[] = ['Date', 'List'];
+  const groupStrategy: GroupStrategyTypes[] = ['List', 'Date'];
   const handleMainDropdownClick = (open: boolean) => {
     setMainOpen(open);
     setSortByOpen(false);

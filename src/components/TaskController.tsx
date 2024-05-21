@@ -111,13 +111,6 @@ export default function TaskController() {
       addTaskToList(task as Task, getGroupKey(task as Task, store.groupTask));
     }
 
-    // setTasksGroups((prevState: TasksGroups) => {
-    //   const newList: Task[] = updateTask(prevState[groupName], taskId, {completed});
-    //   return {
-    //     ...prevState,
-    //     [groupName]: newList,
-    //   }
-    // })
   };
   const submitTaskHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -126,7 +119,7 @@ export default function TaskController() {
         name: task,
         id: uuid(),
         creationTime: new Date(),
-        dueDate: store.defaultDueDate,
+        dueDate: store.globalDueDate,
         completed: false,
       };
       addTask(newTask);

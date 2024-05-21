@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
-import {defaultDueDate, getDaysOfMonth, getMonthName, isSameDay} from "../../utils/date.js";
-import {CalendarDayInfo} from "../../types/Dates";
-import {useStore} from "../../store";
+import {getDaysOfMonth, getMonthName, isSameDay} from "../../utils/date.js";
+import {CalendarDayInfo, DueDate} from "../../types/Dates";
+import {defaultStates, useStore} from "../../store";
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
@@ -10,9 +10,10 @@ interface CalendarProps {
 
 export default function Calendar({}: CalendarProps) {
   const store = useStore();
-  const [dueDate, setDueDate] = useState<Date>(store.defaultDueDate);
-  const [displayedMonth, setDisplayedMonth] = useState<number>(dueDate.getMonth());
-  const [displayedYear, setDisplayedYear] = useState<number>(dueDate.getFullYear());
+  const [dueDate, setDueDate] = useState<DueDate>(store.globalDueDate);
+  const currTime = new Date();
+  const [displayedMonth, setDisplayedMonth] = useState<number>(dueDate ? dueDate.getMonth() : currTime.getMonth() + 1);
+  const [displayedYear, setDisplayedYear] = useState<number>(dueDate ? dueDate.getFullYear() : currTime.getFullYear());
   const [days, setDays] = useState(getDaysOfMonth(displayedYear, displayedMonth));
   const [numRows, setNumRows] = useState(Math.ceil(days.length / 7));
   const daysName = ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'];
@@ -35,16 +36,16 @@ export default function Calendar({}: CalendarProps) {
   }
   const handleClickReset = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
-    store.upDateDefaultDueDate(defaultDueDate());
-    setDueDate(store.defaultDueDate);
-    setDisplayedMonth(dueDate.getMonth());
-    setDisplayedYear(dueDate.getFullYear());
+    store.upDateGlobalDueDate(defaultStates.globalDueDate);
+    setDueDate(store.globalDueDate);
+    setDisplayedMonth(dueDate ? dueDate.getMonth() : currTime.getMonth() + 1);
+    setDisplayedYear(dueDate ? dueDate.getFullYear() : currTime.getFullYear());
     setDays(getDaysOfMonth(displayedYear, displayedMonth));
     setNumRows(Math.ceil(days.length / 7));
   }
   const handleClickOkay = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
-    store.upDateDefaultDueDate(dueDate);
+    store.upDateGlobalDueDate(dueDate);
   }
   return (
     <div className="flex flex-col w-60  bg-surface p-2">
@@ -85,7 +86,7 @@ export default function Calendar({}: CalendarProps) {
         {days.map((day, index) => (
           <div
             key={day.date.getDate().toString() + index}
-            className={`rounded-lg text-onSurface hover:bg-gray-800 p-1 ${isSameDay(day.date, dueDate) ? 'bg-gray-800' : ''}`}
+            className={`rounded-lg text-onSurface hover:bg-gray-800 p-1 ${(dueDate ? isSameDay(day.date, dueDate) : false) ? 'bg-gray-800' : ''}`}
             onClick={() => handleClick(day)}
           >
             {day.date.getDate()} {/* Display the day of the month */}
