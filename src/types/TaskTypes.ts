@@ -1,14 +1,10 @@
-export type TaskListType = 'ongoing' | 'complete';
-
 export type TaskId = string
 export type Task = {
   name: string,
   id: TaskId
+  completed: boolean
   creationTime: Date
   dueDate: Date
 }
 
-export type TasksList = {
-  [listName in TaskListType]: Task[];
-};
 

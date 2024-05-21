@@ -12,6 +12,7 @@ describe("TaskCard tests", () => {
     render(
       <TaskCard
         taskName={taskName}
+        id={'example'}
         onChange={onChangeMock}
         onClickCheckBox={onClickCheckBoxMock}
         checked={false}
@@ -30,6 +31,7 @@ describe("TaskCard tests", () => {
     render(
       <TaskCard
         taskName={taskName}
+        id={'example'}
         onChange={onChangeMock}
         onClickCheckBox={onClickCheckBoxMock}
         checked={false}
@@ -49,6 +51,7 @@ describe("TaskCard tests", () => {
     render(
       <TaskCard
         taskName={taskName}
+        id={'example'}
         onChange={onChangeMock}
         onClickCheckBox={onClickCheckBoxMock}
         checked={false}
@@ -67,6 +70,7 @@ describe("TaskCard tests", () => {
     render(
       <TaskCard
         taskName={taskName}
+        id={'example'}
         onChange={onChangeMock}
         onClickCheckBox={onClickCheckBoxMock}
         checked={true}
@@ -85,6 +89,7 @@ describe("TaskCard tests", () => {
     render(
       <TaskCard
         taskName={taskName}
+        id={'example'}
         onChange={onChangeMock}
         onClickCheckBox={onClickCheckBoxMock}
         checked={false}
@@ -103,6 +108,7 @@ describe("TaskCard tests", () => {
       <TaskCard
         taskName={taskName}
         onChange={onChangeMock}
+        id={'example'}
         onClickCheckBox={onClickCheckBoxMock}
         checked={false}
       />
@@ -124,6 +130,7 @@ describe("TaskCard tests", () => {
     const {rerender} = render(
       <TaskCard
         taskName={taskName}
+        id={'example'}
         onChange={onChangeMock}
         onClickCheckBox={onClickCheckBoxMock}
         checked={false}
@@ -136,6 +143,7 @@ describe("TaskCard tests", () => {
     rerender(
       <TaskCard
         taskName={taskName}
+        id={'example'}
         onChange={onChangeMock}
         onClickCheckBox={onClickCheckBoxMock}
         checked={true}

@@ -9,7 +9,7 @@ interface AddTaskFormProps {
   onChangeTaskName: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
-export default function AddTaskForm({onSubmit, task, onChangeTaskName}: AddTaskFormProps) {
+export default function AddTaskForm({onSubmit, task, onChangeTaskName}: Readonly<AddTaskFormProps>) {
   const [calenderOpen, setCalenderOpen] = React.useState(false);
   const store = useStore();
   return (

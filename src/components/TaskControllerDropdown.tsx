@@ -3,14 +3,16 @@ import Dropdown from "./menus/Dropdown";
 import MenuItem from "./menus/MenuItem";
 import React, {useState} from "react";
 import {useStore} from "../store";
-import {SortStrategy} from "../types/SortStrategy";
+import {SortStrategyTypes} from "../types/SortStrategyTypes";
+import {GroupStrategyTypes} from "../types/GroupStrategyTypes";
 
 export default function TaskControllerDropdown() {
   const [mainOpen, setMainOpen] = useState(false);
   const [sortByOpen, setSortByOpen] = useState(false);
   const [groupByOpen, setGroupByOpen] = useState(false);
   const store = useStore();
-  const sortStrategy: SortStrategy[] = ['Date', 'Title'];
+  const sortStrategy: SortStrategyTypes[] = ['Date', 'Title'];
+  const groupStrategy: GroupStrategyTypes[] = ['Date', 'List'];
   const handleMainDropdownClick = (open: boolean) => {
     setMainOpen(open);
     setSortByOpen(false);
@@ -30,7 +32,7 @@ export default function TaskControllerDropdown() {
       }
     };
   };
-  const handleClickSortStrategy = (strategy: SortStrategy) => {
+  const handleClickSortStrategy = (strategy: SortStrategyTypes) => {
     store.upDateSortTask(strategy);
     setSortByOpen(false);
     setGroupByOpen(false);

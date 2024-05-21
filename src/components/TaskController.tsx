@@ -1,58 +1,64 @@
 import React, {useEffect, useState} from "react";
 import AddTaskForm from "./AddTaskForm";
-import {Task, TaskId, TaskListType, TasksList} from "../types/TaskTypes";
+import {Task, TaskId} from "../types/TaskTypes";
 import uuid from "react-uuid";
 import TaskList from "./TaskList";
 import TaskControllerDropdown from "./TaskControllerDropdown";
 import {useStore} from "../store";
+import {getGroupKey, groupTasks} from "../utils/GroupingTasks";
+import {sortByDate, sortByTitle} from "../utils/SortingTasks";
+import {TasksGroups} from "../types/GroupStrategyTypes";
 
 export default function TaskController() {
-  const [task, setTask] = useState<string>("");
-  const [tasksList, setTasksList] = useState<TasksList>({
-    complete: [],
-    ongoing: [],
-  });
   const store = useStore();
-  const ListTypes: TaskListType[] = ["ongoing", "complete"];
+  const [task, setTask] = useState<string>("");
+  const [tasks, setTasks] = useState<Task[]>([])
+  const [tasksGroups, setTasksGroups] = useState<TasksGroups>(() => groupTasks(store.groupTask, tasks));
+
+  useEffect(() => {
+    setTasksGroups(() => groupTasks(store.groupTask, tasks));
+  }, [store.groupTask]);
+
 
   useEffect(() => {
     switch (store.sortTask) {
       case "Date":
-        ListTypes.forEach(listType => {
-          setTasksList((prevState) => ({
-            ...prevState,
-            [listType]: prevState[listType].sort(
-              (a: Task, b: Task) => b.creationTime.getTime() - a.creationTime.getTime(),
-            ),
-          }));
+        Object.keys(tasksGroups).forEach(group => {
+          setTasksGroups((prevState: TasksGroups) => ({
+              ...prevState,
+              [group]: sortByDate(prevState[group])
+            }
+          ));
         })
+
         break;
       case "Title":
-        ListTypes.forEach(listType => {
-          setTasksList((prevState) => ({
-            ...prevState,
-            [listType]: [...prevState[listType]]
-              .sort(
-                (a, b) => a.name.localeCompare(b.name),
-              ),
-          }));
-        });
+        Object.keys(tasksGroups).forEach(group => {
+          setTasksGroups((prevState: TasksGroups) => ({
+              ...prevState,
+              [group]: sortByTitle(prevState[group])
+            }
+          ));
+        })
         break;
       default:
         break;
     }
   }, [store.sortTask]);
-  const addTaskToList = (task: Task, listType: TaskListType) => {
+  const addTask = (newTask: Task): void => {
+    addTaskToList(newTask, getGroupKey(newTask, store.groupTask))
+  }
+  const addTaskToList = (task: Task, groupName: string) => {
     switch (store.sortTask) {
       case "Date":
-        setTasksList((prevState) => ({
+        setTasksGroups((prevState: TasksGroups) => ({
           ...prevState,
-          [listType]: [task, ...prevState[listType]]
-        }));
+          [groupName]: [task, ...prevState[groupName]]
+        }))
         break;
       case "Title":
-        setTasksList((prevState) => {
-          const newList = [...prevState[listType]];
+        setTasksGroups((prevState: TasksGroups) => {
+          const newList = [...prevState[groupName]];
           let index = 0;
           while (index < newList.length && task.name.localeCompare(newList[index].name) > 0) {
             index++;
@@ -60,59 +66,59 @@ export default function TaskController() {
           newList.splice(index, 0, task);
           return {
             ...prevState,
-            [listType]: newList
+            [groupName]: newList
           };
         });
     }
 
   };
-  const changeTaskNameHandler = (taskId: TaskId, listType: TaskListType) => {
-    return (newTaskName: string) => {
-      setTasksList((prevState) => {
-        const newList = prevState[listType].map((task) => {
-          if (task.id === taskId) {
-            return {...task, name: newTaskName};
-          }
-          return task;
-        });
-        return {
-          ...prevState,
-          [listType]: newList,
-        };
-      });
-    };
-  };
-  const removeTaskFromList = (id: TaskId, listType: TaskListType) => {
-    setTasksList((prevState) => {
-      const newList = [...prevState[listType]].filter((task) => task.id !== id);
+  const changeTaskNameHandler = (groupName: string) => (taskId: TaskId) => (newTaskName: string) => {
+    setTasksGroups((prevState: TasksGroups) => {
+      const newList = updateTask(prevState[groupName], taskId, {name: newTaskName})
       return {
         ...prevState,
-        [listType]: newList,
+        [groupName]: newList,
       };
     });
   };
 
-  const findTask = (id: TaskId, listType: TaskListType): Task | undefined => {
-    return tasksList[listType].find((task) => task.id === id);
+  const findTask = (taskId: TaskId, groupName: string): Task | undefined => {
+    return tasksGroups[groupName].find(task => task.id === taskId);
+  }
+  const removeTaskFromList = (id: TaskId, groupName: string) => {
+    setTasksGroups((prevState: TasksGroups) => {
+      const newList = [...prevState[groupName]].filter((task) => task.id !== id);
+      return {
+        ...prevState,
+        [groupName]: newList,
+      };
+    });
   };
 
-  const clickCheckedHandler = (taskId: TaskId, listType: TaskListType) => {
-    // set complete task to incomplete
-    if (listType === "complete") {
-      const task = findTask(taskId, "complete");
-      if (task) {
-        removeTaskFromList(taskId, "complete");
-        addTaskToList(task, "ongoing");
+  const updateTask = (tasks: Task[], taskId: TaskId, updatedTask: Partial<Task>): Task[] => {
+    return tasks.map((task: Task) => {
+      if (task.id === taskId) {
+        return {...task, ...updatedTask};
       }
+      return task;
+    });
+  };
+
+  const clickCheckedHandler = (groupName: string) => (taskId: TaskId) => (completed: boolean) => {
+    console.log(taskId);
+    const task = {...findTask(taskId, groupName), completed}
+    if (task) {
+      removeTaskFromList(taskId, groupName);
+      addTaskToList(task as Task, getGroupKey(task as Task, store.groupTask));
     }
-    // completed a task
-    else if (listType === "ongoing") {
-      const task = findTask(taskId, "ongoing");
-      if (task) {
-        removeTaskFromList(taskId, "ongoing");
-        addTaskToList(task, "complete");
-      }
-    }
+
+    // setTasksGroups((prevState: TasksGroups) => {
+    //   const newList: Task[] = updateTask(prevState[groupName], taskId, {completed});
+    //   return {
+    //     ...prevState,
+    //     [groupName]: newList,
+    //   }
+    // })
   };
   const submitTaskHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -121,9 +127,10 @@ export default function TaskController() {
         name: task,
         id: uuid(),
         creationTime: new Date(),
-        dueDate: store.defaultDueDate
+        dueDate: store.defaultDueDate,
+        completed: false,
       };
-      addTaskToList(newTask, "ongoing");
+      addTask(newTask);
       setTask("");
     }
   };
@@ -142,18 +149,16 @@ export default function TaskController() {
             setTask(e.target.value)
           }
         />
-
-        {ListTypes.map(
-          (listType) =>
-            tasksList[listType].length > 0 && (
+        {Object.keys(tasksGroups).map((groupName) =>
+            tasksGroups[groupName].length > 0 && (
               <TaskList
-                key={listType}
-                listType={listType}
-                tasks={tasksList[listType]}
-                onClickCheckBox={clickCheckedHandler}
-                onChangeTaskName={changeTaskNameHandler}
+                key={groupName}
+                groupName={groupName}
+                tasks={tasksGroups[groupName]}
+                onClickCheckBox={clickCheckedHandler(groupName)}
+                onChangeTaskName={changeTaskNameHandler(groupName)}
               />
-            ),
+            )
         )}
       </div>
     </div>
