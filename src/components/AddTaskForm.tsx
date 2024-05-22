@@ -1,6 +1,6 @@
 import React, {ChangeEvent, FormEvent} from "react";
 import Dropdown from "./menus/Dropdown";
-import {useStore} from "../store";
+import {defaultStates, useStore} from "../store";
 import Calendar from './calendar/Calendar';
 import {formatDate} from "../utils/date.js";
 
@@ -13,6 +13,7 @@ interface AddTaskFormProps {
 export default function AddTaskForm({onSubmit, task, onChangeTaskName}: Readonly<AddTaskFormProps>) {
   const [calenderOpen, setCalenderOpen] = React.useState(false);
   const store = useStore();
+
   return (
     <form onSubmit={onSubmit}>
       <div className="relative">
@@ -35,7 +36,11 @@ export default function AddTaskForm({onSubmit, task, onChangeTaskName}: Readonly
             detectOutsideClick
           >
             <div className="absolute mt-4">
-              <Calendar/>
+              <Calendar
+                onResetHandler={() => store.upDateGlobalDueDate(defaultStates.globalDueDate)}
+                onOkayHandler={(dueDate) => store.upDateGlobalDueDate(dueDate)}
+                dueDate={store.globalDueDate}
+              />
             </div>
           </Dropdown>
         </div>

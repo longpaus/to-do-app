@@ -16,6 +16,7 @@ export function getDaysOfMonth(year: number, month: number): CalendarDayInfo[] {
   // Iterate through each day of the month
   for (let day = 1; day <= daysInMonth; day++) {
     const date = new Date(year, month, day);
+    date.setHours(23, 59, 59, 999);
     const isCurrentMonth = date.getMonth() === month;
 
     days.push({

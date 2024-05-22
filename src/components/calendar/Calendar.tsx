@@ -1,18 +1,20 @@
 import React, {useEffect, useState} from "react";
 import {getDaysOfMonth, getMonthName, isSameDay} from "../../utils/date.js";
 import {CalendarDayInfo, DueDate} from "../../types/Dates";
-import {defaultStates, useStore} from "../../store";
+import {defaultStates} from "../../store";
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
 interface CalendarProps {
+  onResetHandler: () => void;
+  onOkayHandler: (dueDate: DueDate) => void;
+  dueDate: DueDate;
 }
 
-export default function Calendar({}: CalendarProps) {
-  const store = useStore();
-  const [dueDate, setDueDate] = useState<DueDate>(store.globalDueDate);
+export default function Calendar(props: CalendarProps) {
+  const [dueDate, setDueDate] = useState<DueDate>(props.dueDate);
   const currTime = new Date();
-  const [displayedMonth, setDisplayedMonth] = useState<number>(dueDate ? dueDate.getMonth() : currTime.getMonth() + 1);
+  const [displayedMonth, setDisplayedMonth] = useState<number>(dueDate ? dueDate.getMonth() : currTime.getMonth());
   const [displayedYear, setDisplayedYear] = useState<number>(dueDate ? dueDate.getFullYear() : currTime.getFullYear());
   const [days, setDays] = useState(getDaysOfMonth(displayedYear, displayedMonth));
   const [numRows, setNumRows] = useState(Math.ceil(days.length / 7));
@@ -36,16 +38,16 @@ export default function Calendar({}: CalendarProps) {
   }
   const handleClickReset = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
-    store.upDateGlobalDueDate(defaultStates.globalDueDate);
-    setDueDate(store.globalDueDate);
-    setDisplayedMonth(dueDate ? dueDate.getMonth() : currTime.getMonth() + 1);
+    props.onResetHandler();
+    setDueDate(defaultStates.globalDueDate);
+    setDisplayedMonth(dueDate ? dueDate.getMonth() : currTime.getMonth());
     setDisplayedYear(dueDate ? dueDate.getFullYear() : currTime.getFullYear());
     setDays(getDaysOfMonth(displayedYear, displayedMonth));
     setNumRows(Math.ceil(days.length / 7));
   }
   const handleClickOkay = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
-    store.upDateGlobalDueDate(dueDate);
+    props.onOkayHandler(dueDate);
   }
   return (
     <div className="flex flex-col w-60  bg-surface p-2">
