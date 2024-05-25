@@ -1,0 +1,10 @@
+sorting and grouping tasks:
+When a user change a grouping strategy we re-group the tasks with the new strategy and then we'll sort the tasks with the chosen sorting strategy
+
+Grouping types:
+GroupStrategyTypes - contain the types of group strategies in strings
+
+ListGroupsKey and DateGroupsKey - contain the key of each strategies.
+ListGroups and DateGroups - the objects of each grouping strategies.
+
+TasksList - contain the objects of the grouping strategy.

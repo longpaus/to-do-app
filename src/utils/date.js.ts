@@ -4,7 +4,7 @@ export function formatDate(date: DueDate): string {
   if (date) {
     return `${date.getDate().toString()}/${date.getMonth() + 1}`
   }
-  return "No date";
+  return "none";
 }
 
 export function getDaysOfMonth(year: number, month: number): CalendarDayInfo[] {

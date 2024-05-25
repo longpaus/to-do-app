@@ -57,28 +57,24 @@ export default function Calendar(props: CalendarProps) {
         </div>
         <div className="pr-1">
           <ArrowBackIosNewIcon
+            className="hover:text-white text-gray-400"
             sx={{
               width: '15px',
               height: '15px',
-              '&:hover': {
-                color: 'white',
-              }
             }}
             onClick={() => setDisplayedMonth(displayedMonth - 1)}
           />
           <ArrowForwardIosIcon
+            className="hover:text-white text-gray-400"
             sx={{
               width: '15px',
               height: '15px',
-              '&:hover': {
-                color: 'white',
-              }
             }}
             onClick={() => setDisplayedMonth(displayedMonth + 1)}
           />
         </div>
       </div>
-      <div className={`grid grid-cols-7 grid-rows-${numRows + 1} text-center`}>
+      <div className={`grid grid-cols-7 grid-rows-${numRows + 1} text-center text-gray-400`}>
         {/* Render day names */}
         {daysName.map((day) => (
           <div key={day}>{day}</div>

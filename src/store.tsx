@@ -15,12 +15,17 @@ interface StoreState {
   // default due date of tasks
   globalDueDate: DueDate;
   upDateGlobalDueDate: (date: DueDate) => void;
+
+  // taskgroups
+  // tasksGroups: TasksGroups
+  // upDateTaskGroup: (upDateTaskGroup: TasksGroups) => void;
 }
 
 export const defaultStates: Pick<StoreState, 'sortTask' | 'groupTask' | 'globalDueDate'> = {
   sortTask: 'Date',
   groupTask: 'List',
   globalDueDate: undefined,
+  // tasksGroups: groupTasks('List', []),
 };
 
 // Create the store
@@ -31,4 +36,6 @@ export const useStore = create<StoreState>(set => ({
   upDateGroupTask: (groupTask: GroupStrategyTypes) => set({groupTask}),
   globalDueDate: defaultStates.globalDueDate,
   upDateGlobalDueDate: (date: DueDate) => set({globalDueDate: date}),
+  // tasksGroups: defaultStates.tasksGroups,
+  // upDateTaskGroup: (tasksGroups: TasksGroups) => set({tasksGroups}),
 }));

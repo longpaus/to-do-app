@@ -8,6 +8,7 @@ describe("TaskCard tests", () => {
   test("render textfield input", () => {
     const onChangeMock = jest.fn();
     const onClickCheckBoxMock = jest.fn();
+    const updateTaskMock = jest.fn();
 
     const taskName = "example"
     const mockTask: Task = {name: taskName, creationTime: new Date(), id: 'id', completed: false, dueDate: new Date()}
@@ -16,6 +17,7 @@ describe("TaskCard tests", () => {
         task={mockTask}
         onChange={onChangeMock}
         onClickCheckBox={onClickCheckBoxMock}
+        updateTask={updateTaskMock}
       />
     );
     const textfieldElem = screen.getByRole("textbox");
@@ -26,7 +28,7 @@ describe("TaskCard tests", () => {
   test("change task name", () => {
     const onChangeMock = jest.fn();
     const onClickCheckBoxMock = jest.fn();
-
+    const updateTaskMock = jest.fn();
     const taskName = "example"
     const mockTask: Task = {name: taskName, creationTime: new Date(), id: 'id', completed: false, dueDate: new Date()}
     render(
@@ -34,6 +36,7 @@ describe("TaskCard tests", () => {
         task={mockTask}
         onChange={onChangeMock}
         onClickCheckBox={onClickCheckBoxMock}
+        updateTask={updateTaskMock}
       />
     );
     const textFieldElem = screen.getByRole('textbox');
@@ -45,6 +48,7 @@ describe("TaskCard tests", () => {
   test("render un-checked checkbox input", () => {
     const onChangeMock = jest.fn();
     const onClickCheckBoxMock = jest.fn();
+    const updateTaskMock = jest.fn();
     const taskName = "example"
     const mockTask: Task = {name: taskName, creationTime: new Date(), id: 'id', completed: false, dueDate: new Date()}
     render(
@@ -52,6 +56,7 @@ describe("TaskCard tests", () => {
         task={mockTask}
         onChange={onChangeMock}
         onClickCheckBox={onClickCheckBoxMock}
+        updateTask={updateTaskMock}
       />
     );
 
@@ -62,7 +67,7 @@ describe("TaskCard tests", () => {
   test("render checked checkbox input", () => {
     const onChangeMock = jest.fn();
     const onClickCheckBoxMock = jest.fn();
-
+    const updateTaskMock = jest.fn();
     const taskName = "example"
     const mockTask: Task = {name: taskName, creationTime: new Date(), id: 'id', completed: true, dueDate: new Date()}
     render(
@@ -70,6 +75,7 @@ describe("TaskCard tests", () => {
         task={mockTask}
         onChange={onChangeMock}
         onClickCheckBox={onClickCheckBoxMock}
+        updateTask={updateTaskMock}
       />
     );
 
@@ -80,6 +86,7 @@ describe("TaskCard tests", () => {
   test("click checkbox input", () => {
     const onChangeMock = jest.fn();
     const onClickCheckBoxMock = jest.fn();
+    const updateTaskMock = jest.fn();
 
     const taskName = "example"
     const mockTask: Task = {name: taskName, creationTime: new Date(), id: 'id', completed: false, dueDate: new Date()}
@@ -88,6 +95,7 @@ describe("TaskCard tests", () => {
         task={mockTask}
         onChange={onChangeMock}
         onClickCheckBox={onClickCheckBoxMock}
+        updateTask={updateTaskMock}
       />
     );
     const checkbox = screen.getByRole("checkbox");
@@ -97,6 +105,7 @@ describe("TaskCard tests", () => {
   test("focus on task card", () => {
     const onChangeMock = jest.fn();
     const onClickCheckBoxMock = jest.fn();
+    const updateTaskMock = jest.fn();
 
     const taskName = "example"
     const mockTask: Task = {name: taskName, creationTime: new Date(), id: 'id', completed: false, dueDate: new Date()}
@@ -105,6 +114,7 @@ describe("TaskCard tests", () => {
         task={mockTask}
         onChange={onChangeMock}
         onClickCheckBox={onClickCheckBoxMock}
+        updateTask={updateTaskMock}
       />
     );
     const taskCardElem = screen.getByRole('listitem');
@@ -119,6 +129,8 @@ describe("TaskCard tests", () => {
   test('applies checked style when checked prop is true', () => {
     const onChangeMock = jest.fn();
     const onClickCheckBoxMock = jest.fn();
+    const updateTaskMock = jest.fn();
+
     const taskName = 'example task';
 
     const mockTask: Task = {name: taskName, creationTime: new Date(), id: 'id', completed: false, dueDate: new Date()}
@@ -127,6 +139,7 @@ describe("TaskCard tests", () => {
         task={mockTask}
         onChange={onChangeMock}
         onClickCheckBox={onClickCheckBoxMock}
+        updateTask={updateTaskMock}
       />
     );
     const taskCardElem = screen.getByRole('listitem');
@@ -138,6 +151,7 @@ describe("TaskCard tests", () => {
         task={mockTask}
         onChange={onChangeMock}
         onClickCheckBox={onClickCheckBoxMock}
+        updateTask={updateTaskMock}
       />
     );
 

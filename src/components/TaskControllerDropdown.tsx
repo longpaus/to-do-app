@@ -47,7 +47,7 @@ export default function TaskControllerDropdown() {
       title={
         <SwapVertIcon
           fontSize="medium"
-          className="cursor-pointer hover:bg-surface"
+          className="cursor-pointer hover:bg-surface text-gray-400"
         />
       }
       detectOutsideClick
