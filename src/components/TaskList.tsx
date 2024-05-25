@@ -6,13 +6,11 @@ import Accordion from "./menus/Accordion";
 interface TaskListProps {
   groupName: string;
   tasks: Task[];
-  onClickCheckBox: (taskId: string) => (completed: boolean) => void;
-  onChangeTaskName: (taskId: string) => (newTask: string) => void;
-  updateTask: (taskId: TaskId) => (updatedTask: Task) => void;
+  updateTask: (taskId: TaskId) => (updatedTask: Task, changeTaskGroup?: boolean) => void;
 }
 
 const TaskList: React.FC<TaskListProps> = (props) => {
-  const {groupName, tasks, onClickCheckBox, onChangeTaskName} = props;
+  const {groupName, tasks} = props;
   return (
     <div className="mt-10">
       <Accordion
@@ -24,8 +22,6 @@ const TaskList: React.FC<TaskListProps> = (props) => {
               <TaskCard
                 key={t.id}
                 task={t}
-                onClickCheckBox={onClickCheckBox(t.id)}
-                onChange={onChangeTaskName(t.id)}
                 updateTask={props.updateTask(t.id)}
               />
             ))}

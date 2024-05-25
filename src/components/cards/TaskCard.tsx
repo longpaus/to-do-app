@@ -7,12 +7,10 @@ import Calendar from "../calendar/Calendar";
 
 interface TaskCardProps {
   task: Task
-  onChange: (newTask: string) => void;
-  onClickCheckBox: (completed: boolean) => void;
-  updateTask: (updatedTask: Task) => void;
+  updateTask: (updatedTask: Task, changeTaskGroup?: boolean) => void;
 }
 
-export default function TaskCard({task, onChange, onClickCheckBox, updateTask}: Readonly<TaskCardProps>) {
+export default function TaskCard({task, updateTask}: Readonly<TaskCardProps>) {
   const [focus, setFocus] = useState(false);
   const focusStyle = focus ? 'bg-surface' : ''
   const checkedStyle = task.completed ? 'opacity-50' : ''
@@ -23,7 +21,13 @@ export default function TaskCard({task, onChange, onClickCheckBox, updateTask}: 
     updateTask(newTask);
   }
   const updateDueDateHandler = (newDueDate: DueDate) => {
-    updateTask({...task, dueDate: newDueDate});
+    updateTask({...task, dueDate: newDueDate}, true);
+  }
+  const onCheckedHandler = () => {
+    updateTask({...task, completed: !task.completed}, true);
+  }
+  const onChangeNameHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    updateTask({...task, name: e.target.value});
   }
   return (
     <>
@@ -44,12 +48,12 @@ export default function TaskCard({task, onChange, onClickCheckBox, updateTask}: 
           <input type="checkbox"
                  className=" h-5 w-5 cursor-pointer appearance-none  border checked:bg-gray-600 checked:hover:bg-gray-400"
                  checked={task.completed}
-                 onClick={() => onClickCheckBox(!task.completed)}
+                 onClick={() => onCheckedHandler()}
           />
           <input type="text"
                  className="block ms-2 bg-inherit w-full text-onSurface border-none outline-none focus:bg-surface"
                  value={task.name}
-                 onChange={(e) => onChange(e.target.value)}
+                 onChange={(e) => onChangeNameHandler(e)}
           />
           <div
             className="text-sm cursor-pointer"

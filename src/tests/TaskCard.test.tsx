@@ -15,8 +15,6 @@ describe("TaskCard tests", () => {
     render(
       <TaskCard
         task={mockTask}
-        onChange={onChangeMock}
-        onClickCheckBox={onClickCheckBoxMock}
         updateTask={updateTaskMock}
       />
     );
@@ -34,8 +32,6 @@ describe("TaskCard tests", () => {
     render(
       <TaskCard
         task={mockTask}
-        onChange={onChangeMock}
-        onClickCheckBox={onClickCheckBoxMock}
         updateTask={updateTaskMock}
       />
     );
@@ -54,8 +50,6 @@ describe("TaskCard tests", () => {
     render(
       <TaskCard
         task={mockTask}
-        onChange={onChangeMock}
-        onClickCheckBox={onClickCheckBoxMock}
         updateTask={updateTaskMock}
       />
     );
@@ -73,8 +67,6 @@ describe("TaskCard tests", () => {
     render(
       <TaskCard
         task={mockTask}
-        onChange={onChangeMock}
-        onClickCheckBox={onClickCheckBoxMock}
         updateTask={updateTaskMock}
       />
     );
@@ -93,8 +85,6 @@ describe("TaskCard tests", () => {
     render(
       <TaskCard
         task={mockTask}
-        onChange={onChangeMock}
-        onClickCheckBox={onClickCheckBoxMock}
         updateTask={updateTaskMock}
       />
     );
@@ -112,8 +102,6 @@ describe("TaskCard tests", () => {
     render(
       <TaskCard
         task={mockTask}
-        onChange={onChangeMock}
-        onClickCheckBox={onClickCheckBoxMock}
         updateTask={updateTaskMock}
       />
     );
@@ -137,8 +125,6 @@ describe("TaskCard tests", () => {
     const {rerender} = render(
       <TaskCard
         task={mockTask}
-        onChange={onChangeMock}
-        onClickCheckBox={onClickCheckBoxMock}
         updateTask={updateTaskMock}
       />
     );
@@ -149,8 +135,6 @@ describe("TaskCard tests", () => {
     rerender(
       <TaskCard
         task={mockTask}
-        onChange={onChangeMock}
-        onClickCheckBox={onClickCheckBoxMock}
         updateTask={updateTaskMock}
       />
     );

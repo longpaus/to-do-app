@@ -18,8 +18,12 @@ export default function TaskController() {
     setTasksGroups(() => groupTasks(store.groupTask, mergeGroupsIntoArray(tasksGroups)));
   }, [store.groupTask]);
 
-  const updateTaskHandler = (group: string) => (taskId: TaskId) => (updatedTask: Task) => {
+  const updateTaskHandler = (group: string) => (taskId: TaskId) => (updatedTask: Task, changeTaskGroup: boolean = false) => {
     updateTask(group, taskId, updatedTask);
+    if (changeTaskGroup) {
+      removeTaskFromList(taskId, group);
+      addTaskToList(updatedTask, getGroupKey(updatedTask, store.groupTask));
+    }
   }
 
   useEffect(() => {
@@ -58,9 +62,6 @@ export default function TaskController() {
         });
     }
 
-  };
-  const changeTaskNameHandler = (groupName: string) => (taskId: TaskId) => (newTaskName: string) => {
-    updateTask(groupName, taskId, {name: newTaskName})
   };
 
   const findTask = (taskId: TaskId, groupName: string): Task | undefined => {
@@ -136,8 +137,6 @@ export default function TaskController() {
                 key={groupName}
                 groupName={groupName}
                 tasks={tasksGroups[groupName]}
-                onClickCheckBox={clickCheckedHandler(groupName)}
-                onChangeTaskName={changeTaskNameHandler(groupName)}
                 updateTask={updateTaskHandler(groupName)}
               />
             )
