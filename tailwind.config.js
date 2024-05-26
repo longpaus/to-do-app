@@ -21,5 +21,5 @@ module.exports = {
       textColor: ["hover", "focus"],
     },
   },
-  plugins: [require("daisyui")],
+  plugins: [],
 };

@@ -1,18 +1,21 @@
 import React, {useEffect, useState} from "react";
-import {defaultDueDate, getDaysOfMonth, getMonthName, isSameDay} from "../../utils/date.js";
-import {CalendarDayInfo} from "../../types/Dates";
-import {useStore} from "../../store";
+import {getDaysOfMonth, getMonthName, isSameDay} from "../../utils/date.js";
+import {CalendarDayInfo, DueDate} from "../../types/DateTypes";
+import {defaultStates} from "../../store";
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
 interface CalendarProps {
+  onResetHandler: () => void;
+  onOkayHandler: (dueDate: DueDate) => void;
+  dueDate: DueDate;
 }
 
-export default function Calendar({}: CalendarProps) {
-  const store = useStore();
-  const [dueDate, setDueDate] = useState<Date>(store.defaultDueDate);
-  const [displayedMonth, setDisplayedMonth] = useState<number>(dueDate.getMonth());
-  const [displayedYear, setDisplayedYear] = useState<number>(dueDate.getFullYear());
+export default function Calendar(props: CalendarProps) {
+  const [dueDate, setDueDate] = useState<DueDate>(props.dueDate);
+  const currTime = new Date();
+  const [displayedMonth, setDisplayedMonth] = useState<number>(dueDate ? dueDate.getMonth() : currTime.getMonth());
+  const [displayedYear, setDisplayedYear] = useState<number>(dueDate ? dueDate.getFullYear() : currTime.getFullYear());
   const [days, setDays] = useState(getDaysOfMonth(displayedYear, displayedMonth));
   const [numRows, setNumRows] = useState(Math.ceil(days.length / 7));
   const daysName = ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'];
@@ -35,16 +38,16 @@ export default function Calendar({}: CalendarProps) {
   }
   const handleClickReset = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
-    store.upDateDefaultDueDate(defaultDueDate());
-    setDueDate(store.defaultDueDate);
-    setDisplayedMonth(dueDate.getMonth());
-    setDisplayedYear(dueDate.getFullYear());
+    props.onResetHandler();
+    setDueDate(defaultStates.globalDueDate);
+    setDisplayedMonth(dueDate ? dueDate.getMonth() : currTime.getMonth());
+    setDisplayedYear(dueDate ? dueDate.getFullYear() : currTime.getFullYear());
     setDays(getDaysOfMonth(displayedYear, displayedMonth));
     setNumRows(Math.ceil(days.length / 7));
   }
   const handleClickOkay = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
-    store.upDateDefaultDueDate(dueDate);
+    props.onOkayHandler(dueDate);
   }
   return (
     <div className="flex flex-col w-60  bg-surface p-2">
@@ -54,28 +57,24 @@ export default function Calendar({}: CalendarProps) {
         </div>
         <div className="pr-1">
           <ArrowBackIosNewIcon
+            className="hover:text-white text-gray-400"
             sx={{
               width: '15px',
               height: '15px',
-              '&:hover': {
-                color: 'white',
-              }
             }}
             onClick={() => setDisplayedMonth(displayedMonth - 1)}
           />
           <ArrowForwardIosIcon
+            className="hover:text-white text-gray-400"
             sx={{
               width: '15px',
               height: '15px',
-              '&:hover': {
-                color: 'white',
-              }
             }}
             onClick={() => setDisplayedMonth(displayedMonth + 1)}
           />
         </div>
       </div>
-      <div className={`grid grid-cols-7 grid-rows-${numRows + 1} text-center`}>
+      <div className={`grid grid-cols-7 grid-rows-${numRows + 1} text-center text-gray-400`}>
         {/* Render day names */}
         {daysName.map((day) => (
           <div key={day}>{day}</div>
@@ -85,7 +84,7 @@ export default function Calendar({}: CalendarProps) {
         {days.map((day, index) => (
           <div
             key={day.date.getDate().toString() + index}
-            className={`rounded-lg text-onSurface hover:bg-gray-800 p-1 ${isSameDay(day.date, dueDate) ? 'bg-gray-800' : ''}`}
+            className={`rounded-lg text-onSurface hover:bg-gray-800 p-1 ${(dueDate ? isSameDay(day.date, dueDate) : false) ? 'bg-gray-800' : ''}`}
             onClick={() => handleClick(day)}
           >
             {day.date.getDate()} {/* Display the day of the month */}

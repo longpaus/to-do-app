@@ -1,11 +1,11 @@
-import {CalendarDayInfo} from "../types/Dates";
+import {CalendarDayInfo, DueDate} from "../types/DateTypes";
 
-export const defaultDueDate = () => {
-  const currentDate = new Date();
-  currentDate.setHours(23, 59, 59, 999);
-  return currentDate;
+export function formatDate(date: DueDate): string {
+  if (date) {
+    return `${date.getDate().toString()}/${date.getMonth() + 1}`
+  }
+  return "none";
 }
-
 
 export function getDaysOfMonth(year: number, month: number): CalendarDayInfo[] {
   const daysInMonth = new Date(year, month + 1, 0).getDate();
@@ -16,6 +16,7 @@ export function getDaysOfMonth(year: number, month: number): CalendarDayInfo[] {
   // Iterate through each day of the month
   for (let day = 1; day <= daysInMonth; day++) {
     const date = new Date(year, month, day);
+    date.setHours(23, 59, 59, 999);
     const isCurrentMonth = date.getMonth() === month;
 
     days.push({

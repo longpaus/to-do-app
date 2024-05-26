@@ -6,7 +6,7 @@ import TaskList from "./TaskList";
 import TaskControllerDropdown from "./TaskControllerDropdown";
 import {useStore} from "../store";
 import {getGroupKey, groupTasks, mergeGroupsIntoArray} from "../utils/GroupingTasks";
-import {sortByDate, sortByTitle} from "../utils/SortingTasks";
+import {sortTasks} from "../utils/SortingTasks";
 import {TasksGroups} from "../types/GroupStrategyTypes";
 
 export default function TaskController() {
@@ -18,32 +18,24 @@ export default function TaskController() {
     setTasksGroups(() => groupTasks(store.groupTask, mergeGroupsIntoArray(tasksGroups)));
   }, [store.groupTask]);
 
+  const updateTaskHandler = (group: string) => (taskId: TaskId) => (updatedTask: Task, changeTaskGroup: boolean = false) => {
+    updateTask(group, taskId, updatedTask);
+    if (changeTaskGroup) {
+      removeTaskFromList(taskId, group);
+      addTaskToList(updatedTask, getGroupKey(updatedTask, store.groupTask));
+    }
+  }
 
   useEffect(() => {
-    switch (store.sortTask) {
-      case "Date":
-        Object.keys(tasksGroups).forEach(group => {
-          setTasksGroups((prevState: TasksGroups) => ({
-              ...prevState,
-              [group]: sortByDate(prevState[group])
-            }
-          ));
-        })
-
-        break;
-      case "Title":
-        Object.keys(tasksGroups).forEach(group => {
-          setTasksGroups((prevState: TasksGroups) => ({
-              ...prevState,
-              [group]: sortByTitle(prevState[group])
-            }
-          ));
-        })
-        break;
-      default:
-        break;
-    }
+    Object.keys(tasksGroups).forEach(group => {
+      setTasksGroups((prevState: TasksGroups) => ({
+          ...prevState,
+          [group]: sortTasks(store.sortTask, prevState[group])
+        }
+      ));
+    })
   }, [store.sortTask]);
+
   const addTask = (newTask: Task): void => {
     addTaskToList(newTask, getGroupKey(newTask, store.groupTask))
   }
@@ -71,15 +63,6 @@ export default function TaskController() {
     }
 
   };
-  const changeTaskNameHandler = (groupName: string) => (taskId: TaskId) => (newTaskName: string) => {
-    setTasksGroups((prevState: TasksGroups) => {
-      const newList = updateTask(prevState[groupName], taskId, {name: newTaskName})
-      return {
-        ...prevState,
-        [groupName]: newList,
-      };
-    });
-  };
 
   const findTask = (taskId: TaskId, groupName: string): Task | undefined => {
     return tasksGroups[groupName].find(task => task.id === taskId);
@@ -94,13 +77,20 @@ export default function TaskController() {
     });
   };
 
-  const updateTask = (tasks: Task[], taskId: TaskId, updatedTask: Partial<Task>): Task[] => {
-    return tasks.map((task: Task) => {
-      if (task.id === taskId) {
-        return {...task, ...updatedTask};
+  const updateTask = (groupName: string, taskId: TaskId, updatedTask: Partial<Task>) => {
+    setTasksGroups(prevState => {
+      const newTasks = prevState[groupName].map((task: Task) => {
+        if (task.id === taskId) {
+          return {...task, ...updatedTask};
+        }
+        return task;
+      });
+      return {
+        ...prevState,
+        [groupName]: newTasks
       }
-      return task;
-    });
+    })
+
   };
 
   const clickCheckedHandler = (groupName: string) => (taskId: TaskId) => (completed: boolean) => {
@@ -111,13 +101,6 @@ export default function TaskController() {
       addTaskToList(task as Task, getGroupKey(task as Task, store.groupTask));
     }
 
-    // setTasksGroups((prevState: TasksGroups) => {
-    //   const newList: Task[] = updateTask(prevState[groupName], taskId, {completed});
-    //   return {
-    //     ...prevState,
-    //     [groupName]: newList,
-    //   }
-    // })
   };
   const submitTaskHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -126,7 +109,7 @@ export default function TaskController() {
         name: task,
         id: uuid(),
         creationTime: new Date(),
-        dueDate: store.defaultDueDate,
+        dueDate: store.globalDueDate,
         completed: false,
       };
       addTask(newTask);
@@ -154,8 +137,7 @@ export default function TaskController() {
                 key={groupName}
                 groupName={groupName}
                 tasks={tasksGroups[groupName]}
-                onClickCheckBox={clickCheckedHandler(groupName)}
-                onChangeTaskName={changeTaskNameHandler(groupName)}
+                updateTask={updateTaskHandler(groupName)}
               />
             )
         )}

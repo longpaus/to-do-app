@@ -1,7 +1,7 @@
 import {create} from 'zustand'
 import {SortStrategyTypes} from "./types/SortStrategyTypes";
-import {defaultDueDate} from "./utils/date.js";
 import {GroupStrategyTypes} from "./types/GroupStrategyTypes";
+import {DueDate} from "./types/DateTypes";
 
 interface StoreState {
   //sorting tasks method
@@ -13,16 +13,29 @@ interface StoreState {
   upDateGroupTask: (upDateSortTask: GroupStrategyTypes) => void;
 
   // default due date of tasks
-  defaultDueDate: Date;
-  upDateDefaultDueDate: (date: Date) => void;
+  globalDueDate: DueDate;
+  upDateGlobalDueDate: (date: DueDate) => void;
+
+  // taskgroups
+  // tasksGroups: TasksGroups
+  // upDateTaskGroup: (upDateTaskGroup: TasksGroups) => void;
 }
+
+export const defaultStates: Pick<StoreState, 'sortTask' | 'groupTask' | 'globalDueDate'> = {
+  sortTask: 'Date',
+  groupTask: 'List',
+  globalDueDate: undefined,
+  // tasksGroups: groupTasks('List', []),
+};
 
 // Create the store
 export const useStore = create<StoreState>(set => ({
-  sortTask: 'Date',
+  sortTask: defaultStates.sortTask,
   upDateSortTask: (sortTask: SortStrategyTypes) => set({sortTask}), // Update the sortTask state
-  groupTask: 'List',
+  groupTask: defaultStates.groupTask,
   upDateGroupTask: (groupTask: GroupStrategyTypes) => set({groupTask}),
-  defaultDueDate: defaultDueDate(),
-  upDateDefaultDueDate: (date: Date) => set({defaultDueDate: date}),
+  globalDueDate: defaultStates.globalDueDate,
+  upDateGlobalDueDate: (date: DueDate) => set({globalDueDate: date}),
+  // tasksGroups: defaultStates.tasksGroups,
+  // upDateTaskGroup: (tasksGroups: TasksGroups) => set({tasksGroups}),
 }));

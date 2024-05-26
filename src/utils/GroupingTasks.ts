@@ -28,6 +28,7 @@ export function getListTypeObject(groupStrategy: GroupStrategyTypes): TasksGroup
         Today: [],
         Later: [],
         Overdue: [],
+        'No Date': [],
         Completed: []
       }
   }
@@ -79,6 +80,8 @@ export function getGroupByDateKey(task: Task) {
   const currDate = new Date();
   if (task.completed) {
     return "Completed";
+  } else if (!task.dueDate) {
+    return "No Date";
   } else if (currDate > task.dueDate) {
     return "Overdue";
   } else if (isSameDay(currDate, task.dueDate)) {
