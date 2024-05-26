@@ -1,4 +1,4 @@
-import {CalendarDayInfo, DueDate} from "../types/Dates";
+import {CalendarDayInfo, DueDate} from "../types/DateTypes";
 
 export function formatDate(date: DueDate): string {
   if (date) {

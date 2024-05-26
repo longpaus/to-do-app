@@ -1,4 +1,4 @@
-import {DueDate} from "./Dates";
+import {DueDate} from "./DateTypes";
 
 export type TaskId = string
 export type Task = {

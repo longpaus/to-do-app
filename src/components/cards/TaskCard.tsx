@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import {Task} from "../../types/TaskTypes";
 import {formatDate} from "../../utils/date.js";
-import {DueDate} from "../../types/Dates";
+import {DueDate} from "../../types/DateTypes";
 import {Modal} from "@mui/material";
 import Calendar from "../calendar/Calendar";
 
@@ -17,11 +17,12 @@ export default function TaskCard({task, updateTask}: Readonly<TaskCardProps>) {
   const [modalOpen, setModalOpen] = useState(false);
 
   const resetDueDateHandler = () => {
-    const newTask = {...task, dueDate: undefined};
-    updateTask(newTask);
+    updateTask({...task, dueDate: undefined});
+    setModalOpen(false);
   }
   const updateDueDateHandler = (newDueDate: DueDate) => {
     updateTask({...task, dueDate: newDueDate}, true);
+    setModalOpen(false);
   }
   const onCheckedHandler = () => {
     updateTask({...task, completed: !task.completed}, true);

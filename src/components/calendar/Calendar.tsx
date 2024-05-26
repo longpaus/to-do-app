@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {getDaysOfMonth, getMonthName, isSameDay} from "../../utils/date.js";
-import {CalendarDayInfo, DueDate} from "../../types/Dates";
+import {CalendarDayInfo, DueDate} from "../../types/DateTypes";
 import {defaultStates} from "../../store";
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';

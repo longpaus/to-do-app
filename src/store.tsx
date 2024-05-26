@@ -1,7 +1,7 @@
 import {create} from 'zustand'
 import {SortStrategyTypes} from "./types/SortStrategyTypes";
 import {GroupStrategyTypes} from "./types/GroupStrategyTypes";
-import {DueDate} from "./types/Dates";
+import {DueDate} from "./types/DateTypes";
 
 interface StoreState {
   //sorting tasks method
