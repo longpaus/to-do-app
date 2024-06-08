@@ -54,7 +54,8 @@ export default function TaskControllerDropdown() {
       open={mainOpen}
       setOpenFunc={(open) => handleMainDropdownClick(open)}
     >
-      <ul className="bg-white dark:bg-darkSurface text-lightOnSurface dark:text-white w-40 border-gray-800 shadow-xl">
+      <ul
+        className="dark:bg-darkSurface text-lightOnSurface dark:text-white w-40 border-gray-800 shadow-xl">
         <Dropdown
           open={sortByOpen}
           setOpenFunc={handleInnerDropdownClick("sortBy")}
@@ -75,7 +76,8 @@ export default function TaskControllerDropdown() {
             </MenuItem>
           }
         >
-          <ul className="rounded bg-lightSurface dark:bg-darkSurface w-24 border-solid border border-gray-500">
+          <ul
+            className="rounded dark:bg-darkSurface dark:text-white w-24 border-solid shadow-xl dark:border border-gray-500">
             {sortStrategy.map((strategy) => (
               <MenuItem
                 selected={strategy === store.sortTask}
@@ -108,7 +110,7 @@ export default function TaskControllerDropdown() {
           }
         >
           <ul
-            className="rounded bg-lightSurface dark:bg-darkSurface dark:text-white w-24 border-solid border border-gray-500">
+            className="rounded dark:bg-darkSurface dark:text-white w-24 border-solid shadow-xl dark:border border-gray-500">
 
             {groupStrategy.map((strategy) => (
               <MenuItem
