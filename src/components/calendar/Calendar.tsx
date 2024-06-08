@@ -52,7 +52,7 @@ export default function Calendar(props: CalendarProps) {
   return (
     <div className="flex flex-col w-60  bg-surface p-2 ">
       <div className="flex justify-between  text-lg">
-        <div className="pl-1 text-onSurface">
+        <div className="pl-1 text-lightOnSurface dark:text-darkOnSurface">
           {getMonthName(displayedMonth)} {displayedYear}
         </div>
         <div className="pr-1">

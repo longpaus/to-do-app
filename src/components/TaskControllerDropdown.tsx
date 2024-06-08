@@ -47,7 +47,7 @@ export default function TaskControllerDropdown() {
       title={
         <SwapVertIcon
           fontSize="medium"
-          className="cursor-pointer hover:bg-lightSurface text-gray-400 dark:hover:bg-darkSurface"
+          className="cursor-pointer hover:bg-lightSurface text-gray-400 dark:hover:bg-gray-800"
         />
       }
       detectOutsideClick
@@ -60,7 +60,7 @@ export default function TaskControllerDropdown() {
           open={sortByOpen}
           setOpenFunc={handleInnerDropdownClick("sortBy")}
           title={
-            <MenuItem hoverColor="bg-gray-500">
+            <MenuItem>
               <div className="flex justify-between">
                 Sort By
                 <svg
@@ -93,7 +93,7 @@ export default function TaskControllerDropdown() {
           open={groupByOpen}
           setOpenFunc={handleInnerDropdownClick("groupBy")}
           title={
-            <MenuItem hoverColor="bg-gray-500">
+            <MenuItem>
               <div className="flex justify-between">
                 Group By
                 <svg

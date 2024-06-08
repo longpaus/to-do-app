@@ -7,14 +7,14 @@ function App() {
 
   useEffect(() => {
     if (darkMode) {
-      document.documentElement.classList.add('dark-mode');
+      document.documentElement.classList.add("dark");
     } else {
-      document.documentElement.classList.remove('dark-mode');
+      document.documentElement.classList.remove('dark');
     }
   }, [darkMode]);
 
   return (
-    <div className="bg-background overflow-x-hidden ">
+    <div className="dark:bg-darkBackground bg-lightBackground overflow-x-hidden ">
       <TaskController/>
 
     </div>
