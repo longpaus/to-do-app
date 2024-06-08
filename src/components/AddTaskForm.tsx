@@ -18,7 +18,7 @@ export default function AddTaskForm({onSubmit, task, onChangeTaskName}: Readonly
     <form onSubmit={onSubmit}>
       <div className="relative">
         <input type="text" id="newTask"
-               className="block w-full p-4 ps-5 text-sm text-onSurface border rounded-lg bg-surface focus:ring-blue-500 focus:border-blue-500"
+               className="block w-full p-4 ps-5 text-sm dark:text-darkOnSurface text-lightOnSurface border rounded-lg bg-lightSurface dark:bg-darkSurface focus:ring-blue-500 focus:border-blue-500"
                placeholder="Add New Task"
                required
                value={task}
@@ -27,7 +27,7 @@ export default function AddTaskForm({onSubmit, task, onChangeTaskName}: Readonly
         <div className="absolute bottom-3 end-20  ">
           <Dropdown
             title={
-              <div className="text-blue-500 p-1 cursor-pointer hover:bg-gray-800">
+              <div className="text-blue-500 p-1 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800 rounded-md">
                 {formatDate(store.globalDueDate)}
               </div>
             }

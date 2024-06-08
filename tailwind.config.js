@@ -1,24 +1,28 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  darkMode: 'selector',
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {
       colors: {
         primary: "#c38fff",
         onPrimary: "#000000",
-        secondary: "#03dac6",
-        onSecondary: "#000000",
-        background: "#121212",
-        surface: "#1e1e1e",
-        onSurface: "white",
+        // dark mode
+        darkBackground: "#121212",
+        darkSurface: "#1e1e1e",
+        darkOnSurface: "white",
+
+        // light mode
+        lightBackground: "#fafafa",
+        lightSurface: "#f6f8ff",
+        lightOnSurface: "black",
       },
     },
   },
   variants: {
     extend: {
-      backgroundColor: ["hover", "focus"],
-      primaryColor: ["hover", "focus"],
-      textColor: ["hover", "focus"],
+      backgroundColor: ["hover", "focus", "dark"], // Extend for dark mode
+      textColor: ["hover", "focus", "dark"], // Extend for dark mode
     },
   },
   plugins: [],

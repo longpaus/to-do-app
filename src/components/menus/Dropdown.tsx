@@ -34,7 +34,8 @@ export default function Dropdown(props: Readonly<DropDownProps>) {
       <div onClick={handleButtonClick}>{props.title}</div>
       {props.open && (
         <div
-          className={`absolute z-10 rounded-md transition-opacity duration-1000`}
+          className={`absolute z-10 rounded-md bg-white dark:bg-black transition-opacity duration-1000`}
+          
           ref={dropDownRef}
         >
           {props.children}

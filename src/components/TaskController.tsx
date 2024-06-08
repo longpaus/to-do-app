@@ -64,9 +64,6 @@ export default function TaskController() {
 
   };
 
-  const findTask = (taskId: TaskId, groupName: string): Task | undefined => {
-    return tasksGroups[groupName].find(task => task.id === taskId);
-  }
   const removeTaskFromList = (id: TaskId, groupName: string) => {
     setTasksGroups((prevState: TasksGroups) => {
       const newList = [...prevState[groupName]].filter((task) => task.id !== id);
@@ -93,15 +90,6 @@ export default function TaskController() {
 
   };
 
-  const clickCheckedHandler = (groupName: string) => (taskId: TaskId) => (completed: boolean) => {
-    console.log(taskId);
-    const task = {...findTask(taskId, groupName), completed}
-    if (task) {
-      removeTaskFromList(taskId, groupName);
-      addTaskToList(task as Task, getGroupKey(task as Task, store.groupTask));
-    }
-
-  };
   const submitTaskHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (task.length !== 0) {

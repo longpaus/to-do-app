@@ -47,27 +47,28 @@ export default function TaskControllerDropdown() {
       title={
         <SwapVertIcon
           fontSize="medium"
-          className="cursor-pointer hover:bg-surface text-gray-400"
+          className="cursor-pointer hover:bg-gray-100 text-gray-400 dark:hover:bg-gray-800"
         />
       }
       detectOutsideClick
       open={mainOpen}
       setOpenFunc={(open) => handleMainDropdownClick(open)}
     >
-      <ul className="bg-surface text-white w-40 border-gray-800">
+      <ul
+        className="dark:bg-darkSurface text-lightOnSurface dark:text-white w-40 border-gray-800 shadow-xl">
         <Dropdown
           open={sortByOpen}
           setOpenFunc={handleInnerDropdownClick("sortBy")}
           title={
-            <MenuItem hoverColor="bg-gray-500">
+            <MenuItem>
               <div className="flex justify-between">
                 Sort By
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  fill="white"
+                  fill="black"
                   width="20"
                   height="20"
-                  className={`transform ${sortByOpen ? "rotate-180" : ""} mr-2 transition-transform duration-300 ease-in-out`}
+                  className={`transform ${sortByOpen ? "rotate-180" : ""} mr-2 transition-transform duration-300 ease-in-out dark:fill-white`}
                 >
                   <path d="M12 17.414 3.293 8.707l1.414-1.414L12 14.586l7.293-7.293 1.414 1.414L12 17.414z"/>
                 </svg>
@@ -75,7 +76,8 @@ export default function TaskControllerDropdown() {
             </MenuItem>
           }
         >
-          <ul className="rounded bg-surface w-24 border-solid border border-gray-500">
+          <ul
+            className="rounded dark:bg-darkSurface dark:text-white w-24 border-solid shadow-xl dark:border border-gray-500">
             {sortStrategy.map((strategy) => (
               <MenuItem
                 selected={strategy === store.sortTask}
@@ -91,15 +93,15 @@ export default function TaskControllerDropdown() {
           open={groupByOpen}
           setOpenFunc={handleInnerDropdownClick("groupBy")}
           title={
-            <MenuItem hoverColor="bg-gray-500">
+            <MenuItem>
               <div className="flex justify-between">
                 Group By
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  fill="white"
+                  fill="black"
                   width="20"
                   height="20"
-                  className={`transform ${groupByOpen ? "rotate-180" : ""} mr-2 transition-transform duration-300 ease-in-out`}
+                  className={`transform ${groupByOpen ? "rotate-180" : ""} mr-2 transition-transform duration-300 ease-in-out dark:fill-white`}
                 >
                   <path d="M12 17.414 3.293 8.707l1.414-1.414L12 14.586l7.293-7.293 1.414 1.414L12 17.414z"/>
                 </svg>
@@ -107,7 +109,8 @@ export default function TaskControllerDropdown() {
             </MenuItem>
           }
         >
-          <ul className="rounded bg-surface text-white w-24 border-solid border border-gray-500">
+          <ul
+            className="rounded dark:bg-darkSurface dark:text-white w-24 border-solid shadow-xl dark:border border-gray-500">
 
             {groupStrategy.map((strategy) => (
               <MenuItem

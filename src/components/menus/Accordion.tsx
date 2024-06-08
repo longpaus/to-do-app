@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import React, {ReactNode} from "react";
 
 interface CollapseProps {
   title: ReactNode;
@@ -7,11 +7,11 @@ interface CollapseProps {
 }
 
 const Accordion: React.FC<CollapseProps> = (props) => {
-  const { title, defaultOpen, content } = props;
+  const {title, defaultOpen, content} = props;
   const [open, setOpen] = React.useState(defaultOpen);
   return (
     <div className="w-full  ">
-      <input type="checkbox" checked={open} className="peer sr-only" />
+      <input type="checkbox" checked={open} className="peer sr-only"/>
       <label
         className="w-full flex items-center justify-between transition-colors duration-1000 ease-in-out cursor-pointer"
         onClick={() => setOpen(!open)}
@@ -19,12 +19,12 @@ const Accordion: React.FC<CollapseProps> = (props) => {
         {title}
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          fill="white"
+          fill="black"
           width="20"
           height="20"
-          className={`transform ${open ? "rotate-180" : ""} mr-2 transition-transform duration-300 ease-in-out`}
+          className={`transform ${open ? "rotate-180" : ""} mr-2 transition-transform duration-300 ease-in-out darK:fill-white`}
         >
-          <path d="M12 17.414 3.293 8.707l1.414-1.414L12 14.586l7.293-7.293 1.414 1.414L12 17.414z" />
+          <path d="M12 17.414 3.293 8.707l1.414-1.414L12 14.586l7.293-7.293 1.414 1.414L12 17.414z"/>
         </svg>
       </label>
       <div

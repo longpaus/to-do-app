@@ -50,14 +50,14 @@ export default function Calendar(props: CalendarProps) {
     props.onOkayHandler(dueDate);
   }
   return (
-    <div className="flex flex-col w-60  bg-surface p-2">
-      <div className="flex justify-between  text-lg">
-        <div className="pl-1 text-onSurface">
+    <div className="flex flex-col w-60  dark:bg-darkSurface bg-lightSurface p-2 shadow-xl">
+      <div className="flex justify-between text-lg">
+        <div className="pl-1 text-lightOnSurface dark:text-darkOnSurface">
           {getMonthName(displayedMonth)} {displayedYear}
         </div>
         <div className="pr-1">
           <ArrowBackIosNewIcon
-            className="hover:text-white text-gray-400"
+            className="hover:text-black dark:hover:text-white text-gray-400"
             sx={{
               width: '15px',
               height: '15px',
@@ -65,7 +65,7 @@ export default function Calendar(props: CalendarProps) {
             onClick={() => setDisplayedMonth(displayedMonth - 1)}
           />
           <ArrowForwardIosIcon
-            className="hover:text-white text-gray-400"
+            className="hover:text-black dark:hover:text-white text-gray-400"
             sx={{
               width: '15px',
               height: '15px',
@@ -84,7 +84,7 @@ export default function Calendar(props: CalendarProps) {
         {days.map((day, index) => (
           <div
             key={day.date.getDate().toString() + index}
-            className={`rounded-lg text-onSurface hover:bg-gray-800 p-1 ${(dueDate ? isSameDay(day.date, dueDate) : false) ? 'bg-gray-800' : ''}`}
+            className={`rounded-lg text-onSurface hover:bg-gray-200 dark:hover:bg-gray-600 p-1 ${(dueDate ? isSameDay(day.date, dueDate) : false) ? 'bg-gray-200 dark:bg-gray-600' : ''}`}
             onClick={() => handleClick(day)}
           >
             {day.date.getDate()} {/* Display the day of the month */}
