@@ -17,7 +17,7 @@ const TaskList: React.FC<TaskListProps> = (props) => {
         title={<div className="text-sm dark:text-white">{groupName}</div>}
         defaultOpen={true}
         content={
-          <ul className="max-w divide-y divide-gray-800 dark:divide-gray-700">
+          <ul className="max-w divide-y  divide-gray-300 dark:divide-gray-700">
             {tasks.map((t: Task) => (
               <TaskCard
                 key={t.id}

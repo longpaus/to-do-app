@@ -42,7 +42,7 @@ export default function TaskCard({task, updateTask}: Readonly<TaskCardProps>) {
       <li
         onFocus={() => setFocus(true)}
         onBlur={() => setFocus(false)}
-        className={`hover:bg-lightSurface dark:bg-darkSurface p-2 rounded group-hover:bg-lightSurface dark:group-hover:bg-darkSurface ${focusStyle} ${checkedStyle}`}
+        className={`hover:bg-lightSurface dark:hover:bg-darkSurface p-2 rounded group-hover:bg-lightSurface dark:group-hover:bg-darkSurface ${focusStyle} ${checkedStyle}`}
       >
 
         <div className="flex justify-between items-center text-lightOnSurface dark:text-darkOnSurface">
