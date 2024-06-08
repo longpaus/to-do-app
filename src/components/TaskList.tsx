@@ -14,7 +14,7 @@ const TaskList: React.FC<TaskListProps> = (props) => {
   return (
     <div className="mt-10">
       <Accordion
-        title={<div className="text-sm text-white">{groupName}</div>}
+        title={<div className="text-sm dark:text-white">{groupName}</div>}
         defaultOpen={true}
         content={
           <ul className="max-w divide-y divide-gray-800 dark:divide-gray-700">

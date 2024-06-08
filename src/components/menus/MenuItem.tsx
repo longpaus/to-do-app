@@ -15,7 +15,7 @@ export default function MenuItem(props: MenuItemProps) {
         e.stopPropagation();
         props.onClick();
       }
-    }} className={`p-2 cursor-pointer bg-inherit hover:opacity-25`}>
+    }} className={`p-2 cursor-pointer bg-inherit hover:bg-lightSurface dark:hover:opacity-25`}>
       <div className={` ${props.selected ? 'flex justify-between text-blue-400' : ''}`}>
         {props.children}
         {props.selected && <CheckIcon/>}

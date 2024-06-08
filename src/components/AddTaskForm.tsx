@@ -27,7 +27,7 @@ export default function AddTaskForm({onSubmit, task, onChangeTaskName}: Readonly
         <div className="absolute bottom-3 end-20  ">
           <Dropdown
             title={
-              <div className="text-blue-500 p-1 cursor-pointer hover:bg-gray-800">
+              <div className="text-blue-500 p-1 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800 rounded-md">
                 {formatDate(store.globalDueDate)}
               </div>
             }
