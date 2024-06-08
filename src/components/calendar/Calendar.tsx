@@ -57,7 +57,7 @@ export default function Calendar(props: CalendarProps) {
         </div>
         <div className="pr-1">
           <ArrowBackIosNewIcon
-            className="hover:text-black black:hover:text-white text-gray-400"
+            className="hover:text-black dark:hover:text-white text-gray-400"
 
             sx={{
               width: '15px',
