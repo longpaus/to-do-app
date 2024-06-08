@@ -47,7 +47,7 @@ export default function TaskCard({task, updateTask}: Readonly<TaskCardProps>) {
 
         <div className="flex justify-between items-center text-lightOnSurface dark:text-darkOnSurface">
           <input type="checkbox"
-                 className=" h-5 w-5 cursor-pointer appearance-none  border checked:bg-gray-600 checked:hover:bg-gray-400"
+                 className=" h-5 w-5 cursor-pointer appearance-none  border border-gray-500 checked:bg-gray-600 checked:hover:bg-gray-400"
                  checked={task.completed}
                  onClick={() => onCheckedHandler()}
           />
