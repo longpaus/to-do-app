@@ -4,6 +4,11 @@ import {DueDate} from "../../types/DateTypes";
 import {defaultStates} from "../../store";
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import TodayIcon from '@mui/icons-material/Today';
+import WbTwilightIcon from '@mui/icons-material/WbTwilight';
+import NextWeekIcon from '@mui/icons-material/NextWeek';
+import BedtimeIcon from '@mui/icons-material/Bedtime';
+import HoverComponent from "../HoverComponent";
 
 interface CalendarProps {
     resetDueDateHandler: () => void;
@@ -70,13 +75,45 @@ export default function Calendar(props: CalendarProps) {
     }
     return (
         <div className="flex flex-col w-60  dark:bg-darkSurface bg-lightSurface p-2 shadow-xl">
-            <div className="flex justify-around">
-                <div onClick={() => changeDueDateByAmount(0)}>Today</div>
-                <div onClick={() => changeDueDateByAmount(1)}>Tomorrow</div>
-                <div onClick={() => changeDueDateByAmount(7)}>Next week</div>
-                <div onClick={() => changeDueDateByAmount(30)}>next month</div>
+            <div className=" flex justify-between">
+                <HoverComponent
+                    hoverBody={<div
+                        className="text-sm text-white p-1 bg-gray-500 dark:bg-black rounded-md">Today</div>}
+                >
+                    <div
+                        className="ml-1 text-gray-400 cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-800 p-1"
+                        onClick={() => changeDueDateByAmount(0)}>
+                        <TodayIcon/>
+                    </div>
+                </HoverComponent>
+                <HoverComponent
+                    hoverBody={<div
+                        className="text-sm text-white p-1 bg-gray-500 dark:bg-black rounded-md">Tomorrow</div>}>
+                    <div className="text-gray-400 cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-800 p-1"
+                         onClick={() => changeDueDateByAmount(1)}>
+                        <WbTwilightIcon/></div>
+                </HoverComponent>
+
+                <HoverComponent
+                    hoverBody={<div
+                        className="text-sm text-nowrap text-white p-1 bg-gray-500 dark:bg-black rounded-md">Next
+                        Week</div>}
+                >
+                    <div className="text-gray-400 cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-800 p-1"
+                         onClick={() => changeDueDateByAmount(7)}><NextWeekIcon/></div>
+                </HoverComponent>
+
+                <HoverComponent
+                    hoverBody={<div
+                        className="text-sm text-nowrap text-white p-1 bg-gray-500 dark:bg-black rounded-md">Next
+                        Month</div>}>
+                    <div className="text-gray-400 cursor-pointer mr-1 hover:bg-gray-200 dark:hover:bg-gray-800 p-1"
+                         onClick={() => changeDueDateByAmount(30)}>
+                        <BedtimeIcon/></div>
+                </HoverComponent>
+
             </div>
-            <div className="flex justify-between text-lg">
+            <div className="mt-5 flex justify-between text-lg">
                 <div className="pl-1 text-lightOnSurface dark:text-darkOnSurface">
                     {getMonthName(displayedMonth)} {displayedYear}
                 </div>
