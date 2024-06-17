@@ -29,8 +29,8 @@ export default function AddTaskForm({onSubmit, task, onChangeTaskName}: Readonly
                     <Dropdown
                         title={
                             <div
-                                className="text-blue-500 p-1 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800 rounded-md">
-                                {store.globalDueDate ? formatDate(store.globalDueDate) : <CalendarMonthIcon/>}
+                                className={`p-1 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800 rounded-md ${store.globalDueDate ? "text-blue-500" : "text-gray-500"}`}>
+                                <CalendarMonthIcon/> {formatDate(store.globalDueDate)}
                             </div>
                         }
                         open={calenderOpen}
@@ -40,7 +40,10 @@ export default function AddTaskForm({onSubmit, task, onChangeTaskName}: Readonly
                         <div className="absolute mt-4">
                             <Calendar
                                 resetDueDateHandler={() => store.upDateGlobalDueDate(defaultStates.globalDueDate)}
-                                changeDueDateHandler={(dueDate) => store.upDateGlobalDueDate(dueDate)}
+                                changeDueDateHandler={(dueDate) => {
+                                    store.upDateGlobalDueDate(dueDate);
+                                    setCalenderOpen(false)
+                                }}
                                 dueDate={store.globalDueDate}
                             />
                         </div>
