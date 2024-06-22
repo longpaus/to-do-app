@@ -3,12 +3,11 @@ import {useNavigate} from "react-router-dom";
 import {IRegisterFormInput} from "../types/Forms";
 import {useMutation} from "@tanstack/react-query";
 import {signUpUser} from "../utils/api/formsApi";
-import {RegisterUserDTO} from "../types/Dto/RegisterUserDTO";
+import {UserFormDTO} from "../types/Dto/UserFormDTO";
 import {UserDTO} from "../types/Dto/UserDTO";
 import {useStore} from "../store";
 import {useState} from "react";
 import {Link} from "@mui/material";
-
 
 export default function RegisterPage() {
     const {register, handleSubmit} = useForm<IRegisterFormInput>();
@@ -20,7 +19,7 @@ export default function RegisterPage() {
         mutationFn: signUpUser,
         onSuccess: (data: UserDTO) => {
             store.upDateUserId(data.id);
-            navigate('/tasks', {replace: true});
+            navigate('/', {replace: true});
         },
         onError: (err: any) => {
             setError(err['response'].data);
@@ -33,7 +32,7 @@ export default function RegisterPage() {
             return;
         }
 
-        const dto: RegisterUserDTO = {
+        const dto: UserFormDTO = {
             password: data.password,
             username: data.username,
         }
