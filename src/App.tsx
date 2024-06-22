@@ -3,10 +3,12 @@ import {getSystemTheme} from "./utils/uiFunctions";
 import Router from "./Router";
 import {RouterProvider} from "react-router-dom";
 import ThemeModeSwitch from "./components/ThemeModeSwitch";
+import {QueryClient} from "@tanstack/react-query";
+
+const queryClient = new QueryClient();
 
 function App() {
     const [darkMode, setDarkMode] = useState(() => getSystemTheme());
-
     useEffect(() => {
         if (darkMode) {
             document.documentElement.classList.add("dark");
