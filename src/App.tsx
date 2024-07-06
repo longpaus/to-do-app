@@ -5,10 +5,10 @@ import {RouterProvider} from "react-router-dom";
 import ThemeModeSwitch from "./components/ThemeModeSwitch";
 import {QueryClient} from "@tanstack/react-query";
 
-const queryClient = new QueryClient();
 
 function App() {
     const [darkMode, setDarkMode] = useState(() => getSystemTheme());
+
     useEffect(() => {
         if (darkMode) {
             document.documentElement.classList.add("dark");
@@ -22,7 +22,8 @@ function App() {
             <div className="absolute right-24 top-3">
                 <ThemeModeSwitch darkMode={darkMode} setDarkMode={setDarkMode}/>
             </div>
-            <RouterProvider router={Router}/>
+            <TaskController/>
+
         </div>
     );
 }
