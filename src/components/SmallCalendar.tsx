@@ -1,15 +1,20 @@
 import React, {useEffect, useMemo, useState} from "react";
-import {getDaysOfMonth, getMonthName, isSameDay} from "../../utils/date.js";
-import {DueDate} from "../../types/DateTypes";
-import {defaultStates} from "../../store";
+import {getDaysOfMonth, getMonthName, isSameDay} from "../utils/date.js";
+import {DueDate} from "../types/DateTypes";
+import {defaultStates} from "../store";
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import TodayIcon from '@mui/icons-material/Today';
 import WbTwilightIcon from '@mui/icons-material/WbTwilight';
 import NextWeekIcon from '@mui/icons-material/NextWeek';
 import BedtimeIcon from '@mui/icons-material/Bedtime';
-import HoverComponent from "../HoverComponent";
+import HoverComponent from "./HoverComponent";
 
+/**
+ * resetDueDateHandler - used to reset the due date of the task to the default value
+ * changeDueDateHandler - used to change the due date of the task
+ * dueDate - the current due date of the task
+ */
 interface CalendarProps {
     resetDueDateHandler: () => void;
     changeDueDateHandler: (dueDate: DueDate) => void;
@@ -17,15 +22,19 @@ interface CalendarProps {
 }
 
 const DAY_NAMES = ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'];
-
-export default function Calendar(props: CalendarProps) {
+/**
+ * Used to set the due dates of tasks
+ * @param props
+ * @constructor
+ */
+export default function SmallCalendar(props: CalendarProps) {
     const [dueDate, setDueDate] = useState<DueDate>(props.dueDate);
     const currTime = new Date();
     const [displayedMonth, setDisplayedMonth] = useState<number>(dueDate ? dueDate.getMonth() : currTime.getMonth());
     const [displayedYear, setDisplayedYear] = useState<number>(dueDate ? dueDate.getFullYear() : currTime.getFullYear());
 
     const days = useMemo(() => getDaysOfMonth(displayedYear, displayedMonth), [displayedMonth, displayedYear]);
-    const numRows = useMemo(() => Math.ceil(Math.ceil(days.length / 7)), [days.length]);
+    const numRows = useMemo(() => Math.ceil(days.length / 7), [days.length]);
 
 
     useEffect(() => {

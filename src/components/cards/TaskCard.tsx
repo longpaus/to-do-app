@@ -3,7 +3,7 @@ import {Task} from "../../types/TaskTypes";
 import {formatDate} from "../../utils/date.js";
 import {DueDate} from "../../types/DateTypes";
 import {Modal} from "@mui/material";
-import Calendar from "../calendar/Calendar";
+import SmallCalendar from "../SmallCalendar";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 
 interface TaskCardProps {
@@ -35,8 +35,9 @@ export default function TaskCard({task, updateTask}: Readonly<TaskCardProps>) {
         <>
             <Modal open={modalOpen} onClose={() => setModalOpen(false)}>
                 <div style={{transform: 'translate(-50%, -50%)'}} className=" absolute top-1/2 left-1/2 ">
-                    <Calendar resetDueDateHandler={() => resetDueDateHandler()}
-                              changeDueDateHandler={(dueDate) => updateDueDateHandler(dueDate)} dueDate={task.dueDate}/>
+                    <SmallCalendar resetDueDateHandler={() => resetDueDateHandler()}
+                                   changeDueDateHandler={(dueDate) => updateDueDateHandler(dueDate)}
+                                   dueDate={task.dueDate}/>
                 </div>
 
             </Modal>

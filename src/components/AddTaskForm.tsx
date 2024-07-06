@@ -1,7 +1,7 @@
 import React, {ChangeEvent, FormEvent} from "react";
 import Dropdown from "./menus/Dropdown";
 import {defaultStates, useStore} from "../store";
-import Calendar from './calendar/Calendar';
+import SmallCalendar from './SmallCalendar';
 import {formatDate} from "../utils/date.js";
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 
@@ -38,7 +38,7 @@ export default function AddTaskForm({onSubmit, task, onChangeTaskName}: Readonly
                         detectOutsideClick
                     >
                         <div className="absolute mt-4">
-                            <Calendar
+                            <SmallCalendar
                                 resetDueDateHandler={() => store.upDateGlobalDueDate(defaultStates.globalDueDate)}
                                 changeDueDateHandler={(dueDate) => {
                                     store.upDateGlobalDueDate(dueDate);

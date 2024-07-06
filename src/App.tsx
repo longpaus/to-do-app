@@ -1,7 +1,10 @@
 import React, {useEffect, useState} from 'react';
-import TaskController from "./components/TaskController";
 import {getSystemTheme} from "./utils/uiFunctions";
+import Router from "./Router";
+import {RouterProvider} from "react-router-dom";
 import ThemeModeSwitch from "./components/ThemeModeSwitch";
+import {QueryClient} from "@tanstack/react-query";
+
 
 function App() {
     const [darkMode, setDarkMode] = useState(() => getSystemTheme());
