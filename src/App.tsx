@@ -4,25 +4,25 @@ import {getSystemTheme} from "./utils/uiFunctions";
 import ThemeModeSwitch from "./components/ThemeModeSwitch";
 
 function App() {
-  const [darkMode, setDarkMode] = useState(() => getSystemTheme());
+    const [darkMode, setDarkMode] = useState(() => getSystemTheme());
 
-  useEffect(() => {
-    if (darkMode) {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
-  }, [darkMode]);
+    useEffect(() => {
+        if (darkMode) {
+            document.documentElement.classList.add("dark");
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    }, [darkMode]);
 
-  return (
-    <div className="dark:bg-darkBackground bg-lightBackground overflow-x-hidden ">
-      <div className="absolute right-24 top-3">
-        <ThemeModeSwitch darkMode={darkMode} setDarkMode={setDarkMode}/>
-      </div>
-      <TaskController/>
+    return (
+        <div className="dark:bg-darkBackground bg-lightBackground overflow-x-hidden ">
+            <div className="absolute right-24 top-3">
+                <ThemeModeSwitch darkMode={darkMode} setDarkMode={setDarkMode}/>
+            </div>
+            <TaskController/>
 
-    </div>
-  );
+        </div>
+    );
 }
 
 export default App;
